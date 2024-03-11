@@ -1,0 +1,286 @@
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 200 1000;
+  src: local('Mulish'), url('/assets/fonts/mulish.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Mulish';
+  font-style: italic;
+  font-weight: 200 1000;
+  src: local('Mulish'), url('/assets/fonts/mulish_italic.woff2') format('woff2-variations');
+}
+
+:root {
+  --font-txt: 'Mulish', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  --clr-accent-200: hsl(32 100% 70%);
+  --clr-accent-300: hsl(32 100% 60%);
+  --clr-accent-400: hsl(32 100% 50%);
+  --clr-txt-400: hsl(32 12% 10%);
+
+  --max-width: 87.5rem;
+  --site-min-inline-padding: clamp(1.2rem, 5vi, 3rem);
+  --site-inline-padding: max(var(--site-min-inline-padding), calc((100% - var(--max-width)) / 2));
+  --site-block-padding: calc(var(--site-min-inline-padding) / 3 * 2);
+
+  font-family: var(--font-txt);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--clr-txt-400);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:where(*) {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Hide content visually while keeping it accessible to assistive technologies
+ *
+ * See: https://www.a11yproject.com/posts/2013-01-11-how-to-hide-content/
+ * See: https://kittygiraudel.com/2016/10/13/css-hide-and-seek/
+ */
+.visually-hidden {
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important; /* Fix for https://github.com/twbs/bootstrap/issues/25686 */
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+
+  /* Fix for positioned table caption that could become anonymous cells */
+  &:not(caption) {
+    position: absolute !important;
+  }
+}
+
+/*
+ * Use to only display content when it's focused, or one of its child elements is focused
+ * (i.e. when focus is within the element/container that the class was applied to)
+ *
+ * Useful for "Skip to main content" links; see https://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+ */
+
+.visually-hidden-focusable {
+  &:not(:focus):not(:focus-within) {
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important; /* Fix for https://github.com/twbs/bootstrap/issues/25686 */
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+
+    /* Fix for positioned table caption that could become anonymous cells */
+    &:not(caption) {
+      position: absolute !important;
+    }
+  }
+}
+
+body {
+  width: 100%;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  padding-inline: var(--site-inline-padding);
+}
+
+.hero_teaser {
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 21 / 9;
+  inline-size: 100%;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 33.33333% 0 0;
+    background-image: linear-gradient(to top, hsl(0 0% 0% / 50%), hsl(0 05 0% / 50%) 30%, transparent);
+    z-index: -1;
+  }
+
+  h2 {
+    color: white;
+    font-weight: 550;
+    font-size: 1.75rem;
+    margin-block-end: 1rem;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+      }
+    }
+  }
+
+  p {
+    color: white;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  img {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+/* HEADER */
+.site_header {
+  padding-block: var(--site-block-padding);
+  padding-inline: var(--site-inline-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.site_header__title svg {
+  height: 80px;
+  width: auto;
+}
+.site_header__skip_nav {
+  background: var(--clr-accent-400);
+  color: white;
+  padding: .12em .2em;
+  position: absolute;
+  inset: auto auto .5rem var(--site-inline-padding);
+}
+.site_header__nav > ul {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.site_header__nav li {
+  list-style: none;
+}
+.site_header__nav > ul > li > ul {
+  display: none;
+}
+.site_header__nav a {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+
+  &.active {
+    color: var(--clr-accent-400);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 -.5em 0;
+      background-color: currentColor;
+      border-radius: 100vmax;
+      height: 3px;
+    }
+  }
+
+  &:where(:hover, :focus-visible) {
+    color: var(--clr-accent-400);
+  }
+}
+
+/* FOOTER */
+.site_footer {
+  color: white;
+}
+
+.site_footer a {
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: 2px;
+
+  &:where(:hover,:focus-visible) {
+    text-decoration: underline;
+  }
+}
+
+.site_footer li {
+  list-style-type: none;
+}
+
+.site_footer__top {
+  background-color: var(--clr-accent-400);
+  
+  padding-block: var(--site-block-padding);
+  padding-inline: max(var(--site-inline-padding), calc((100% - var(--max-width)) / 2));
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+.site_footer__top__social_links {
+  ul {
+    display: flex;
+    gap: .25em;
+  }
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    inline-size: 3rem;
+    block-size: 3rem;
+    border-radius: 2px;
+
+    &:where(:hover, :focus-visible) {
+      background: hsl(32 100% 100% / 30%);
+    }
+  }
+  svg {
+    inline-size: 2rem;
+    block-size: auto;
+  }
+}
+.site_footer__top__license a {
+  text-decoration: underline;
+  text-decoration-color: hsl(32 100% 100% / 50%);
+
+  &:where(:hover, :focus-visible) {
+    text-decoration-color: white;
+  }
+}
+.site_footer__bottom {
+  background-color: var(--clr-accent-300);
+
+  padding-block: calc(var(--site-min-inline-padding) / 2);
+  padding-inline: max(var(--site-inline-padding), calc((100% - var(--max-width)) / 2));
+  display: flex;
+  justify-content: space-between;
+}
+.site_footer__bottom__legal_links ul {
+  display: flex;
+  gap: .5em;
+}
+
