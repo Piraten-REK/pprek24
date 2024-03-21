@@ -1,0 +1,23 @@
+{
+  "name": "pprek24",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ts": "rollup -c",
+    "ts:dev": "rollup -c --config-dev",
+    "dev": "rollup -c --config-dev --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "rollup": "^4.13.0",
+    "sass": "^1.72.0",
+    "ts-standard": "^12.0.2"
+  },
+  "dependencies": {
+    "@rollup/plugin-terser": "^0.4.4"
+  }
+}

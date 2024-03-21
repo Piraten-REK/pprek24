@@ -1,0 +1,26 @@
+.site_header {
+  padding-block: var(--site-block-padding);
+  padding-inline: var(--site-inline-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  position: relative;
+
+  &[data-navigation-open='true'] {
+    color: white;
+  }
+}
+
+.site_title {
+  a {
+    color: inherit;
+
+    svg {
+      height: var(--site-logo-height);
+      width: auto;
+      position: relative;
+      z-index: 9990;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 export default function nothingToSee () {
-  const checkFor = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA']
-  const logged = new Array(10)
+  const checkFor = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'] as const
+  const logged = new Array<string>(10)
 
   document.addEventListener('keydown', ({ code }) => {
     logged.push(code)

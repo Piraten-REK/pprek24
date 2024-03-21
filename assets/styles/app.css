@@ -39,6 +39,23 @@
   padding: 0;
 }
 
+svg.bi {
+  block-size: 1em;
+  inline-size: auto;
+}
+
+:where(button) {
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  font-size: 1em;
+  line-height: 1lh;
+  background: none;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+}
+
 /*
  * Hide content visually while keeping it accessible to assistive technologies
  *
@@ -167,7 +184,7 @@ main {
   position: relative;
 }
 .site_header__title svg {
-  height: 80px;
+  height: clamp(60px, 14.5vi, 80px);
   width: auto;
 }
 .site_header__skip_nav {
@@ -176,6 +193,59 @@ main {
   padding: .12em .2em;
   position: absolute;
   inset: auto auto .5rem var(--site-inline-padding);
+}
+.site_header__nav_toggle {
+  svg {
+    /* Size: 8 x 10 */
+    block-size: 2rem;
+    inline-size: auto;
+
+    rect {
+      fill: currentColor;
+      width: 10px;
+      height: 1px;
+      rx: .5px;
+      x: 0px;
+      transition: all .3s ease-in-out;
+      transform-origin: center center;
+
+      &:nth-child(1) {
+        y: 0px;
+      }
+
+      &:nth-child(2) {
+        y: 4.5px;
+        width: 8px;
+        x: 2px;
+      }
+
+      &:nth-child(3) {
+        y: 9px;
+      }
+    }
+  }
+
+  &[data-opened="true"] {
+    svg rect {
+      &:nth-child(1) {
+        y: 4.5px;
+        rotate: -45deg;
+      }
+
+      &:nth-child(2) {
+        x: 1px;
+        scale: 0 100%;
+      }
+
+      &:nth-child(3) {
+        y: 4.5px;
+        rotate: 45deg;
+      }
+    }
+  }
+}
+.site_header__nav {
+  display: none;
 }
 .site_header__nav > ul {
   display: flex;
@@ -194,6 +264,9 @@ main {
   color: inherit;
   text-decoration: none;
   position: relative;
+  display: flex;
+  column-gap: .3em;
+  align-items: center;
 
   &.active {
     color: var(--clr-accent-400);
@@ -201,7 +274,7 @@ main {
     &::after {
       content: '';
       position: absolute;
-      inset: auto 0 -.5em 0;
+      inset: auto 0 -.3em 0;
       background-color: currentColor;
       border-radius: 100vmax;
       height: 3px;
