@@ -6,7 +6,9 @@
   "scripts": {
     "ts": "rollup -c",
     "ts:dev": "rollup -c --config-dev",
-    "dev": "rollup -c --config-dev --watch"
+    "dev": "rollup -c --config-dev --watch",
+    "sass": "sass assets/sass",
+    "sass:watch": "sass assets/sass -w"
   },
   "keywords": [],
   "author": "",
