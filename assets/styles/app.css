@@ -256,7 +256,7 @@ body {
   --_padding-block: calc(var(--site-padding-inline) * 2 / 3);
   inline-size: 100%;
   block-size: 5rem;
-  /* background: pink; */
+  background: var(--clr-site-bg);
   padding: var(--_padding-block) var(--site-padding-inline);
   position: relative;
   isolation: isolate;
@@ -344,22 +344,36 @@ body[data-menu-open='true'] .site-header .menu-toggle svg rect {
   --_border-radius: .75em;
   position: absolute;
   inset: auto 0 0 0;
+  z-index: -1;
   translate: 0 100%;
-  padding: var(--_padding-block) var(--site-padding-inline) calc(var(--_padding-block) + var(--_border-radius));
+  padding: 0 var(--site-padding-inline);
   background: var(--clr-nav-bg);
   color: var(--clr-nav-txt);
   border-end-start-radius: var(--_border-radius);
   border-end-end-radius: var(--_border-radius);
+
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: all .45s ease;
+
+  &[aria-expanded='true'] {
+    grid-template-rows: 1fr;
+    padding-block: var(--_padding-block) calc(var(--_padding-block) + var(--_border-radius));
+  }
+
+  &[data-state='opened'] > ul {
+    display: grid;
+  }
 }
 .site-nav li {
   list-style: none;
 }
-.site-nav {
-  display: grid;
+.site-nav > ul {
+  overflow: hidden;
+  display: none;
   grid-template-columns: [standalone-start label-start] 1fr [label-end chevron-start] 1em [chevron-end standalone-end];
-  gap: .667em .5em;
+  column-gap: .5em;
 }
-.site-nav > ul,
 .site-nav > ul > li {
   display: contents;
   font-size: 1.2rem;
@@ -367,6 +381,10 @@ body[data-menu-open='true'] .site-header .menu-toggle svg rect {
   &.search {
     display: block;
     grid-column: standalone;
+  }
+
+  & > :where(a, button) {
+    margin-block-start: .667rem;
   }
 }
 .site-nav > ul > li > a {
@@ -391,18 +409,19 @@ body[data-menu-open='true'] .site-header .menu-toggle svg rect {
   }
 
   & + div {
-    visibility: hidden;
     grid-column: standalone;
     display: grid;
     grid-template-rows: 0fr;
-    margin-block-start: -.5rem;
     font-size: 1rem;
     padding-inline: 1.25rem;
     transition: grid-template-rows .3s ease;
 
     &[aria-expanded='true'] {
-      visibility: inherit;
       grid-template-rows: 1fr;
+    }
+
+    &[data-state='closed'] ul {
+      display: none;
     }
 
     ul {
