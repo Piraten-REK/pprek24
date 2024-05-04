@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>PIRATEN Rhein-Erft-Kreis</title>
-  <link rel="preload" href="/assets/styles/app.css" as="style">
   <link rel="preload" href="/assets/fonts/mulish.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/assets/fonts/mulish_italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/node_modules/bootstrap-icons/font/bootstrap-icons.min.css" as="style" crossorigin="anonymous">
+  <link rel="preload" href="/assets/styles/app.css" as="style" crossorigin="anonymous">
   <link rel="stylesheet" href="/assets/styles/app.css">
   <script src="/assets/js/app.js" defer></script>
 </head>
@@ -33,9 +35,7 @@
         <li>
           <a href="/kreisverband">Kreisverband</a>
           <button class="site-nav-accordion-toggler" aria-controls="_site-nav_sub1" title="Mehr anzeigen">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-            </svg>
+            <i class="bi bi-chevron-down"></i>
           </button>
           <div id="_site-nav_sub1" data-state="closed">
             <ul>
@@ -51,9 +51,7 @@
         <li>
           <a href="/piraten-wirken">Piraten wirken</a>
           <button class="site-nav-accordion-toggler" aria-controls="_site-nav_sub2" title="Mehr anzeigen">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-            </svg>
+            <i class="bi bi-chevron-down"></i>
           </button>
           <div id="_site-nav_sub2" data-state="closed">
             <ul>
@@ -65,9 +63,7 @@
         <li>
           <a href="/mitmachen">Mitmachen</a>
           <button class="site-nav-accordion-toggler" aria-controls="_site-nav_sub3" title="Mehr anzeigen">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-            </svg>
+            <i class="bi bi-chevron-down"></i>
           </button>
           <div id="_site-nav_sub3" data-state="closed">
             <ul>
@@ -77,19 +73,17 @@
           </div>
         </li>
         <li class="search">
-          <button>
+          <!-- <button>
             <svg fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" aria-labelledby="search_btn">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
             <span id="search_btn">Suchen</span>
-          </button>
+          </button> -->
           <search>
             <form method="get" action="/">
               <input type="search" placeholder="Finde wonach Du suchst…" name="s" />
               <button type="submit">
-                <svg fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" aria-label="Suchen">
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                </svg>
+                <i class="bi bi-search"></i>
               </button>
             </form>
           </search>

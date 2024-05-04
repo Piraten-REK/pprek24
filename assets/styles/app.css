@@ -1,3 +1,5 @@
+@import url('/node_modules/bootstrap-icons/font/bootstrap-icons.min.css');
+
 @font-face {
   font-family: 'Mulish';
   font-style: normal;
@@ -371,7 +373,7 @@ body[data-menu-open='true'] .site-header .menu-toggle svg rect {
 .site-nav > ul {
   overflow: hidden;
   display: none;
-  grid-template-columns: [standalone-start label-start] 1fr [label-end chevron-start] 1em [chevron-end standalone-end];
+  grid-template-columns: [standalone-start label-start] 1fr [label-end chevron-start] 1.2em [chevron-end standalone-end];
   column-gap: .5em;
 }
 .site-nav > ul > li {
