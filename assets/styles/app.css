@@ -1,0 +1,412 @@
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 200 1000;
+  src: local('Mulish'), url('/assets/fonts/mulish.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Mulish';
+  font-style: italic;
+  font-weight: 200 1000;
+  src: local('Mulish'), url('/assets/fonts/mulish_italic.woff2') format('woff2-variations');
+}
+
+:root {
+  --font-txt: 'Mulish', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  /* LIGHT THEME COLORS */
+  --clr-light-accent-200: hsl(32 100% 70%);
+  --clr-light-accent-300: hsl(32 100% 60%);
+  --clr-light-accent-400: hsl(32 100% 50%);
+  --clr-light-txt-100: hsl(32 8% 80%);
+  --clr-light-txt-200: hsl(32 8% 67%);
+  --clr-light-txt-400: hsl(32 8% 10%);
+
+  --clr-light-input-bg: hsl(32 100% 98%);
+  --clr-light-site-bg: white;
+  --clr-light-nav-bg: hsl(32 8 10% / 95%);
+  --clr-light-nav-txt: white;
+
+  /* DARK THEME COLORS */
+  --clr-dark-accent-200: var(--clr-light-accent-200);
+  --clr-dark-accent-300: var(--clr-light-accent-300);
+  --clr-dark-accent-400: var(--clr-light-accent-400);
+  --clr-dark-txt-100: var(--clr-light-txt-100);
+  --clr-dark-txt-200: var(--clr-light-txt-200);
+  --clr-dark-txt-400: var(--clr-light-txt-400);
+
+  --clr-dark-input-bg: var(--clr-light-input-bg);
+  --clr-dark-site-bg: var(--clr-light-site-bg);
+  --_clr-dark-site-bg: hsl(32 8% 10%);
+  --clr-dark-nav-bg: var(---clr-light-nav-bg);
+  --clr-dark-nav-txt: var(--clr-light-nav-txt);
+
+  /* THEME COLORS */
+  --clr-accent-200: var(--clr-light-accent-200);
+  --clr-accent-300: var(--clr-light-accent-300);
+  --clr-accent-400: var(--clr-light-accent-400);
+  --clr-txt-100: var(--clr-light-txt-100);
+  --clr-txt-200: var(--clr-light-txt-200);
+  --clr-txt-400: var(--clr-light-txt-400);
+
+  --clr-input-bg: var(--clr-light-input-bg);
+  --clr-site-bg: var(--clr-light-site-bg);
+  --clr-nav-bg: var(--clr-light-nav-bg);
+  --clr-nav-txt: var(--clr-light-nav-txt);
+
+  /* --------------------- */
+
+  --max-width: 80ch;
+  --site-padding-inline: 1rem;
+  
+  color-scheme: light dark;
+  font-family: var(--font-txt);
+  font-size: 100%;
+  line-height: 1.5;
+  color: var(--clr-txt-400);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-accent-200: var(--clr-dark-accent-200);
+    --clr-accent-300: var(--clr-dark-accent-300);
+    --clr-accent-400: var(--clr-dark-accent-400);
+    --clr-txt-100: var(--clr-dark-txt-100);
+    --clr-txt-200: var(--clr-dark-txt-200);
+    --clr-txt-400: var(--clr-dark-txt-400);
+
+    --clr-input-bg: var(--clr-dark-input-bg);
+    --clr-site-bg: var(--clr-dark-site-bg);
+    --clr-nav-txt: var(--clr-dark-nav-txt);
+  }
+}
+
+body[data-theme="light"] {
+  color-scheme: light;
+  --clr-accent-200: var(--clr-light-accent-200);
+  --clr-accent-300: var(--clr-light-accent-300);
+  --clr-accent-400: var(--clr-light-accent-400);
+  --clr-txt-100: var(--clr-light-txt-100);
+  --clr-txt-200: var(--clr-light-txt-200);
+  --clr-txt-400: var(--clr-light-txt-400);
+
+  --clr-input-bg: var(--clr-light-input-bg);
+  --clr-site-bg: var(--clr-light-site-bg);
+  --clr-nav-txt: var(--clr-light-nav-txt);
+}
+
+body[data-theme-dark=""] {
+  color-scheme: dark;
+  --clr-accent-200: var(--clr-dark-accent-200);
+  --clr-accent-300: var(--clr-dark-accent-300);
+  --clr-accent-400: var(--clr-dark-accent-400);
+  --clr-txt-100: var(--clr-dark-txt-100);
+  --clr-txt-200: var(--clr-dark-txt-200);
+  --clr-txt-400: var(--clr-dark-txt-400);
+
+  --clr-input-bg: var(--clr-dark-input-bg);
+  --clr-site-bg: var(--clr-dark-site-bg);
+  --clr-nav-txt: var(--clr-dark-nav-txt);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:where(*) {
+  margin: 0;
+  padding: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:where(*) {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  inline-size: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--clr-site-bg);
+  inline-size: 100%;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: [full-width-start breakout-left-start] var(--layout-padding-start, var(--site-padding-inline)) [content-start breakout-right-start] 1fr [content-end breakout-left-end] var(--layout-padding-end, var(--site-padding-inline)) [full-width-end breakout-right-end];
+  grid-auto-rows: auto;
+  justify-content: start;
+  align-content: start;
+}
+:where(.layout > *) {
+  grid-column: content;
+  padding-inline: 0;
+}
+.full-width {
+  grid-column: full-width;
+  padding-inline: var(--layout-padding, var(--site-padding-inline));
+}
+
+.breakout-start {
+  grid-column: breakout-left;
+  padding-inline: 0 var(--layout-padding-end, var(--site-padding-inline));
+}
+
+.breakout-end {
+  grid-column: breakout-right;
+  padding-inline: var(--layout-padding-start, var(--site-padding-inline)) 0;
+}
+
+/*
+ * Hide content visually while keeping it accessible to assistive technologies
+ * 
+ * See: https://www.a11yproject.com/posts/2013-01-11-how-to-hide-content/
+ * See: https://kittygiraudel.com/2016/10/13/css-hide-and-seek/
+ */
+.visually-hidden {
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important; /* Fix for https://github.com/twbs/bootstrap/issues/25686 */
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+
+}
+/* Fix for positioned table caption that could become anonymous cells */
+.visually-hidden:not(caption) {
+  position: absolute !important;
+}
+
+/*
+ * Use to only display content when it's focused, or one of its child elements is focused
+ * (i.e. when focus is within the element/container that the class was applied to)
+ *
+ * Useful for "Skip to main content" links; see https://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+ */
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important; /* Fix for https://github.com/twbs/bootstrap/issues/25686 */
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+/* Fix for positioned table caption that could become anonymous cells */
+.visually-hidden-focusable:not(caption) {
+  position: absolute !important;
+}
+
+:where(button) {
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  background: none;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+}
+:where(input:not([type='radio'], [type='file'], [type='checkbox'])) {
+  appearance: none;
+  font: inherit;
+  color: var(--clr-txt-400);
+  background: none;
+  background-color: var(--clr-input-bg);
+  display: inline-block;
+  border: 1px solid var(--clr-txt-200);
+  padding-inline: .3em;
+  border-radius: var(--input-border-radius);
+  
+  &:focus-visible {
+    outline: 2px solid var(--clr-accent-400);
+    outline-offset: 2px;
+  }
+}
+
+:where(.btn) {
+  background: var(--clr-accent-400);
+  color: #fff;
+  text-decoration: none;
+  padding: .5em .6em;
+  border-radius: .2em;
+}
+:where(.btn):where(:hover, :focus-visible) {
+  background: var(--clr-accent-300);
+}
+:where(.btn):focus-visible {
+  outline: var(--clr-accent-300) solid .125em;
+  outline-offset: .125em;
+}
+
+/* HEADER */
+.site-header {
+  --_padding-block: calc(var(--site-padding-inline) * 2 / 3);
+  inline-size: 100%;
+  block-size: 5rem;
+  /* background: pink; */
+  padding: var(--_padding-block) var(--site-padding-inline);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-header a:not(.btn) {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.site-title {
+  block-size: 100%;
+}
+.site-title a {
+  display: inline-block;
+  block-size: 100%;
+}
+.site-title svg {
+  block-size: 100%;
+}
+
+.site-header .skip-nav {
+  position: absolute;
+  inset: auto auto 0 var(--site-padding-inline);
+  translate: 0 100%;
+}
+
+.site-header .menu-toggle svg {
+  --_size: 2rem;
+  --_line-height: 1.2px;
+  /* background: pink; */
+  width: var(--_size);
+  height: var(--_size);
+  display: block;
+}
+.site-header .menu-toggle svg rect {
+  --_anim_time_1: .25s;
+  --_anim_time_2: .2s;
+  fill: currentColor;
+  width: 10px;
+  height: var(--_line-height);
+  rx: calc(var(--_line-height) / 2);
+  transition:
+    rotate var(--_anim_time_2) ease,
+    y var(--_anim_time_1) ease var(--_anim_time_2),
+    width 0s linear var(--_anim_time_2);
+  transform-origin: center center;
+
+  &:nth-child(1) {
+    y: 0px;
+  }
+
+  &:nth-child(2) {
+    x: 2px;
+    width: 8px;
+    y: calc(5px - var(--_line-height) * 0.5);
+  }
+
+  &:nth-child(3) {
+    y: calc(10px - var(--_line-height));
+  }
+}
+body[data-menu-open='true'] .site-header .menu-toggle svg rect {
+  transition:
+    y var(--_anim_time_1) ease,
+    rotate var(--_anim_time_2) ease var(--_anim_time_1),
+    width 0s linear var(--_anim_time_1);
+
+  &:nth-child(1) {
+    y: calc(5px - var(--_line-height) * 0.5);
+    rotate: -45deg;
+  }
+  &:nth-child(2) {
+    width: 0;
+  }
+  &:nth-child(3) {
+    y: calc(5px - var(--_line-height) * 0.5);
+    rotate: 45deg;
+  }
+}
+
+.site-nav {
+  --_border-radius: .75em;
+  position: absolute;
+  inset: auto 0 0 0;
+  translate: 0 100%;
+  padding: var(--_padding-block) var(--site-padding-inline) calc(var(--_padding-block) + var(--_border-radius));
+  background: var(--clr-nav-bg);
+  color: var(--clr-nav-txt);
+  border-end-start-radius: var(--_border-radius);
+  border-end-end-radius: var(--_border-radius);
+}
+.site-nav li {
+  list-style: none;
+}
+.site-nav {
+  display: grid;
+  grid-template-columns: [standalone-start label-start] 1fr [label-end chevron-start] 1em [chevron-end standalone-end];
+  gap: .667em .5em;
+}
+.site-nav > ul,
+.site-nav > ul > li {
+  display: contents;
+  font-size: 1.2rem;
+
+  &.search {
+    display: block;
+    grid-column: standalone;
+  }
+}
+.site-nav > ul > li > a {
+  grid-column: standalone;
+
+  &:has(+ .site-nav-accordion-toggler) {
+    grid-column: label;
+  }
+
+  & + .site-nav-accordion-toggler {
+    grid-column: chevron;
+  }
+}
+.site-nav .site-nav-accordion-toggler {
+  display: grid;
+  place-items: center;
+  transform-origin: center center;
+  transition: rotate .3s ease;
+
+  &:has(+ div[aria-expanded='true']) {
+    rotate: -180deg;
+  }
+
+  & + div {
+    visibility: hidden;
+    grid-column: standalone;
+    display: grid;
+    grid-template-rows: 0fr;
+    margin-block-start: -.5rem;
+    font-size: 1rem;
+    padding-inline: 1.25rem;
+    transition: grid-template-rows .3s ease;
+
+    &[aria-expanded='true'] {
+      visibility: inherit;
+      grid-template-rows: 1fr;
+    }
+
+    ul {
+      overflow: hidden;
+    }
+  }
+}
