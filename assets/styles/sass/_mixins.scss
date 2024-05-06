@@ -1,0 +1,5 @@
+@mixin mobileMenu ($state: true) {
+  @at-root body[data-menu-open='#{$state}'] & {
+    @content;
+  }
+}

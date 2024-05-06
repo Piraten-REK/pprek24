@@ -7,8 +7,8 @@
     "ts": "rollup -c",
     "ts:dev": "rollup -c --config-dev",
     "dev": "rollup -c --config-dev --watch",
-    "sass": "sass assets/sass",
-    "sass:watch": "sass assets/sass -w"
+    "sass": "sass assets/styles/sass/:assets/styles/",
+    "sass:watch": "sass assets/styles/sass/:assets/styles/ -w"
   },
   "keywords": [],
   "author": "",
