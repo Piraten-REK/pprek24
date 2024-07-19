@@ -11,7 +11,7 @@ $bootstrap-icons-font-dir: '/node_modules/bootstrap-icons/font/fonts';
   --clr-light-accent-300: hsl(21 98% 50%);
   --clr-light-accent-400: hsl(21 98% 40%);
   --clr-light-txt-100: hsl(32 8% 80%);
-  --clr-light-txt-200: hsl(32 8% 67%);
+  --clr-light-txt-200: hwb(30 64% 30%);
   --clr-light-txt-400: hsl(32 8% 10%);
 
   --clr-light-input-bg: hsl(32 100% 98%);
@@ -50,6 +50,7 @@ $bootstrap-icons-font-dir: '/node_modules/bootstrap-icons/font/fonts';
 
   --max-width: 80ch;
   --site-padding-inline: 1rem;
+  --header-block-size: 5rem;
   
   color-scheme: light dark;
   font-family: var(--font-txt);

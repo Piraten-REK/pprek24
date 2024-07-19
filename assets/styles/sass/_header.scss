@@ -1,9 +1,10 @@
 @use 'mixins' as *;
+@use 'sass:map';
 
 .site-header {
   --_padding-block: calc(var(--site-padding-inline) * 2 / 3);
   inline-size: 100%;
-  block-size: 5rem;
+  block-size: var(--header-block-size);
   background: var(--clr-site-bg);
   padding: var(--_padding-block) var(--site-padding-inline);
   position: relative;
@@ -19,6 +20,8 @@
 
   @at-root .site-title {
     block-size: 100%;
+    position: relative;
+    z-index: 999;
   
     a {
       display: inline-block;
@@ -28,6 +31,14 @@
     svg {
       block-size: 100%;
     }
+
+    &:has(~ .site-nav-toggle[aria-expanded='true']) {
+      svg > g {
+        *, * g {
+          fill: #fff !important;
+        }
+      }
+    }
   }
 
   .skip-nav {
@@ -36,57 +47,64 @@
     translate: 0 100%;
   }
 
-  .menu-toggle svg {
-    --_size: 2rem;
-    --_line-height: 1.2px;
-    width: var(--_size);
-    height: var(--_size);
-    display: block;
-  }
+  .site-nav-toggle {
+    svg {
+      --_size: 2rem;
+      --_line-height: 1.2px;
+      width: var(--_size);
+      height: var(--_size);
+      display: block;
+      position: relative;
+      z-index: 999;
 
-  .menu-toggle svg rect {
-    --_anim_time_1: .25s;
-    --_anim_time_2: .2s;
-    fill: currentColor;
-    width: 10px;
-    height: var(--_line-height);
-    rx: calc(var(--_line-height) / 2);
-    transition:
-      rotate var(--_anim_time_2) ease,
-      y var(--_anim_time_1) ease var(--_anim_time_2),
-      width 0s linear var(--_anim_time_2);
-    transform-origin: center center;
-  
-    &:nth-child(1) {
-      y: 0px;
-    }
-  
-    &:nth-child(2) {
-      x: 2px;
-      width: 8px;
-      y: calc(5px - var(--_line-height) * 0.5);
-    }
-  
-    &:nth-child(3) {
-      y: calc(10px - var(--_line-height));
-    }
-
-    @include mobileMenu {
-      transition:
-        y var(--_anim_time_1) ease,
-        rotate var(--_anim_time_2) ease var(--_anim_time_1),
-        width 0s linear var(--_anim_time_1);
-
-      &:nth-child(1) {
-        y: calc(5px - var(--_line-height) * 0.5);
-        rotate: -45deg;
+      rect {
+        --_anim_time_1: .25s;
+        --_anim_time_2: .2s;
+        fill: currentColor;
+        width: 10px;
+        height: var(--_line-height);
+        rx: calc(var(--_line-height) / 2);
+        transition:
+          rotate var(--_anim_time_2) ease,
+          y var(--_anim_time_1) ease var(--_anim_time_2),
+          width 0s linear var(--_anim_time_2);
+        transform-origin: center center;
+      
+        &:nth-child(1) {
+          y: 0px;
+        }
+      
+        &:nth-child(2) {
+          x: 2px;
+          width: 8px;
+          y: calc(5px - var(--_line-height) * 0.5);
+        }
+      
+        &:nth-child(3) {
+          y: calc(10px - var(--_line-height));
+        }
       }
-      &:nth-child(2) {
-        width: 0;
-      }
-      &:nth-child(3) {
-        y: calc(5px - var(--_line-height) * 0.5);
-        rotate: 45deg;
+    }
+
+    &[aria-expanded='true'] {
+      svg rect {
+        fill: #fff !important;
+        transition:
+          rotate var(--_anim_time_1) ease var(--_anim_time_2),
+          y var(--_anim_time_1) ease,
+          width 0s linear var(--_anim_time_1);
+
+        &:nth-child(1) {
+          y: calc(5px - var(--_line-height) * 0.5);
+          rotate: -45deg;
+        }
+        &:nth-child(2) {
+          width: 0;
+        }
+        &:nth-child(3) {
+          y: calc(5px - var(--_line-height) * 0.5);
+          rotate: 45deg;
+        }
       }
     }
   }
@@ -94,95 +112,59 @@
 
 .site-nav {
   --_border-radius: .75em;
+  --_inset: calc(var(--site-padding-inline) / 2);
+  --_padding-inline: var(--site-padding-inline);
   position: absolute;
-  inset: auto 0 0 0;
-  z-index: -1;
-  translate: 0 100%;
-  padding: 0 var(--site-padding-inline);
-  background: var(--clr-nav-bg);
-  color: var(--clr-nav-txt);
-  border-end-start-radius: var(--_border-radius);
-  border-end-end-radius: var(--_border-radius);
-
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: all .45s ease;
-
-  &[aria-expanded='true'] {
-    grid-template-rows: 1fr;
-    padding-block: var(--_padding-block) calc(var(--_padding-block) + var(--_border-radius));
-  }
-
-  &[data-state='opened'] > ul {
-    display: grid;
-  }
+  inset: var(--_inset) var(--_inset) auto;
+  background: hsl(0 0% 0% / 85%);
+  border-radius: .5rem;
+  padding-block-start: var(--header-block-size);
+  color: #fff;
+  max-block-size: calc(100vh - var(--_inset) * 2);
+  overflow: hidden;
 
   li {
     list-style: none;
-  }
+    position: relative;
 
-  & > ul {
-    overflow: hidden;
-    display: none;
-    grid-template-columns: [standalone-start label-start] 1fr [label-end chevron-start] 1.2em [chevron-end standalone-end];
-    column-gap: .5em;
+    &:where([aria-current], :has([aria-current])) > :where(a, button) {
+      color: pink;
+    }
 
-    & > li {
-      display: contents;
-      font-size: 1.2rem;
-    
-      &.search {
-        display: block;
-        grid-column: standalone;
-      }
-    
-      & > :where(a, button) {
-        margin-block-start: .667rem;
-      }
+    & > :where(a, button) {
+      display: block;
+      inline-size: 100%;
+      text-align: start;
+      padding: calc(var(--_padding-inline) / 2) var(--_padding-block);
 
-      & > a {
-        grid-column: standalone;
-      
-        &:has(+ .site-nav-accordion-toggler) {
-          grid-column: label;
-        }
-      
-        & + .site-nav-accordion-toggler {
-          grid-column: chevron;
-        }
+      &:where(:hover, :focus-visible) {
+        background: var(--clr-light-accent-200);
+        outline: none;
       }
     }
-  }
 
-  .site-nav-accordion-toggler {
-    display: grid;
-    place-items: center;
-    transform-origin: center center;
-    transition: rotate .3s ease;
-  
-    &:has(+ div[aria-expanded='true']) {
-      rotate: -180deg;
+    & > button[aria-haspopup='true'] {
+      @extend .bi;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      column-gap: 1ch;
+      flex-direction: row-reverse;
+
+      &::before {
+        content: map.get($bootstrap-icons-map, 'chevron-down');
+        transform: rotate .25s ease;
+      }
+      
+      &[aria-expanded='true']::before {
+        rotate: -180deg;
+      }
     }
-  
-    & + div {
-      grid-column: standalone;
-      display: grid;
-      grid-template-rows: 0fr;
-      font-size: 1rem;
-      padding-inline: 1.25rem;
-      transition: grid-template-rows .3s ease;
-  
-      &[aria-expanded='true'] {
-        grid-template-rows: 1fr;
-      }
-  
-      &[data-state='closed'] ul {
-        display: none;
-      }
-  
-      ul {
-        overflow: hidden;
-      }
+
+    ul {
+      block-size: 0;
+      overflow: hidden;
+      padding: 0;
     }
   }
 }

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/assets/styles/app.css">
   <script src="/assets/js/app.js" defer></script>
 </head>
-<body data-menu-open="false">
+<body class="home">
   <header class="site-header" role="banner">
     <div class="site-title" role="heading" aria-level="1" aria-roledescription="Seitentitel" title="PIRATEN Rhein-Erft-Kreis">
       <a href="/">
@@ -20,76 +20,79 @@
       </a>
     </div>
     <a href="#main" role="button" class="skip-nav visually-hidden-focusable btn">Navigation überspringen</a>
-    <button class="menu-toggle" title="Navigation öffnen" aria-controls="_site-nav">
+    <button class="site-nav-toggle" title="Navigation öffnen" aria-controls="_site-nav" aria-haspopup="true" aria-expanded="false">
       <svg viewBox="0 0 10 10">
         <rect />
         <rect />
         <rect />
       </svg>
     </button>
-    <nav id="_site-nav" class="site-nav" aria-label="Seitennavigation" aria-expanded="false">
-      <ul>
-        <li>
-          <a href="/" aria-current="page">Home</a>
-        </li>
-        <li>
-          <a href="/kreisverband">Kreisverband</a>
-          <button class="site-nav-accordion-toggler" aria-controls="_site-nav_sub1" title="Mehr anzeigen">
-            <i class="bi bi-chevron-down"></i>
-          </button>
-          <div id="_site-nav_sub1" data-state="closed">
-            <ul>
-              <li><a href="/kreis">Piraten im Kreis</a></li>
-              <li><a href="/bruehl">Piraten in Brühl</a></li>
-              <li><a href="/frechen">Piraten in Frechen</a></li>
-              <li><a href="/kerpen">Piraten in Kerpen</a></li>
-              <li><hr /></li>
-              <li><a href="/kreissatzung">Kreissatzung</a></li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <a href="/piraten-wirken">Piraten wirken</a>
-          <button class="site-nav-accordion-toggler" aria-controls="_site-nav_sub2" title="Mehr anzeigen">
-            <i class="bi bi-chevron-down"></i>
-          </button>
-          <div id="_site-nav_sub2" data-state="closed">
-            <ul>
-              <li><a href="/piraten-wirken">Piraten wirken</a></li>
-              <li><a href="/vor-ort">Piraten vor Ort</a></li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <a href="/mitmachen">Mitmachen</a>
-          <button class="site-nav-accordion-toggler" aria-controls="_site-nav_sub3" title="Mehr anzeigen">
-            <i class="bi bi-chevron-down"></i>
-          </button>
-          <div id="_site-nav_sub3" data-state="closed">
-            <ul>
-              <li><a href="/pirat-werden">Werde Pirat</a></li>
-              <li><a href="/spenden">Spenden</a></li>
-            </ul>
-          </div>
-        </li>
-        <li class="search">
-          <!-- <button>
-            <svg fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" aria-labelledby="search_btn">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-            </svg>
-            <span id="search_btn">Suchen</span>
-          </button> -->
-          <search>
-            <form method="get" action="/">
-              <input type="search" placeholder="Finde wonach Du suchst…" name="s" />
-              <button type="submit">
-                <i class="bi bi-search"></i>
-              </button>
-            </form>
-          </search>
-        </li>
-      </ul>
-    </nav>
+    <ul role="navigation" id="_site-nav" class="site-nav" aria-label="Hauptnavigation">
+      <li aria-current="page">
+        <a href="/" tabindex="-1">Home</a>
+      </li>
+      <li>
+        <button
+          id="_site-nav_sub1_btn"
+          class="site-nav-accordion-toggler"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="_site-nav_sub1"
+          tabindex="-1"
+        >
+          Kreisverband
+        </button>
+        <ul
+          id="_site-nav_sub1"
+          aria-labelledby="_site-nav_sub1_btn"
+        >
+          <li><a href="/kreis" tabindex="-1">Piraten im Kreis</a></li>
+          <li><a href="/bruehl" tabindex="-1">Piraten in Brühl</a></li>
+          <li><a href="/frechen" tabindex="-1">Piraten in Frechen</a></li>
+          <li><a href="/kerpen" tabindex="-1">Piraten in Kerpen</a></li>
+          <li role="separator"></li>
+          <li><a href="/kreissatzung" tabindex="-1">Kreissatzung</a></li>
+        </ul>
+      </li>
+      <li>
+        <button
+          id="_site-nav_sub2_btn"
+          class="site-nav-accordion-toggler"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="_site-nav_sub2"
+          tabindex="-1"
+        >
+        Piraten wirken
+        </button>
+        <ul
+          id="_site-nav_sub2"
+          aria-labelledby="_site-nav_sub2_btn"
+        >
+          <li><a href="/piraten-wirken" tabindex="-1">Piraten wirken</a></li>
+          <li><a href="/vor-ort" tabindex="-1">Piraten vor Ort</a></li>
+        </ul>
+      </li>
+      <li>
+        <button
+          id="_site-nav_sub3_btn"
+          class="site-nav-accordion-toggler"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="_site-nav_sub3"
+          tabindex="-1"
+        >
+          Mitmachen
+        </button>
+        <ul
+          id="_site-nav_sub3"
+          aria-labelledby="_site-nav_sub3_btn"
+        >
+          <li><a href="/pirat-werden" tabindex="-1">Werde Pirat</a></li>
+          <li><a href="/spenden" tabindex="-1">Spenden</a></li>
+        </ul>
+      </li>
+    </ul>
   </header>
   <main id="main"></main>
 </body>
