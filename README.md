@@ -10,4 +10,4 @@ This project is licensed under the [MIT License](./LICENSE).
 
 &copy; 2024 [PIRATEN Rhein-Erft-Kreis](https://piraten-rek.de)
 
-Made with &#x2764;&#xfe0f; by [Mike Kühnapfel](https://github.com/veyxos)
+Made with &#x2764;&#xfe0f; and &#x2615; by [Mike Kühnapfel](https://github.com/veyxos)
