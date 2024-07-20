@@ -91,6 +91,33 @@ function getStructureAt (structure: MenuStructure, indices: number[]): MenuStruc
   }
 }
 
+function setClickHandlers (structure: MenuStructure, currentIndex: number[], depth: number = 0): void {
+  for (
+    let idx = 0, entry = structure[0];
+    idx < structure.length;
+    entry = structure[++idx]
+  ) {
+    if (entry.type === 'item') {
+      continue
+    }
+
+    entry.element.addEventListener('click', () => {
+      const state = toggleExpanded(entry.element)
+
+      currentIndex[depth] = idx
+
+      if (state === 'true') {
+        entry.items[0].element.focus()
+        currentIndex[depth + 1] = 0
+      } else {
+        entry.element.focus()
+      }
+    })
+
+    setClickHandlers(entry.items, currentIndex, depth + 1)
+  }
+}
+
 export default function setUpMenu (menu: HTMLUListElement, toggle: HTMLButtonElement): void {
   const structure = setUpMenuStructure(menu, toggle)
   const currentIndex: number[] = []
@@ -106,6 +133,8 @@ export default function setUpMenu (menu: HTMLUListElement, toggle: HTMLButtonEle
       delete currentIndex[0]
     }
   })
+
+  setClickHandlers(structure, currentIndex)
 
   menu.addEventListener('keydown', event => {
     const current = getStructureAt(structure, currentIndex)

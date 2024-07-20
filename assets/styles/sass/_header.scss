@@ -1,7 +1,11 @@
 @use 'mixins' as *;
 @use 'sass:map';
+@use 'sass:list';
 
 .site-header {
+  --_anim_time_1: .25s;
+  --_anim_time_2: .2s;
+
   --_padding-block: calc(var(--site-padding-inline) * 2 / 3);
   inline-size: 100%;
   block-size: var(--header-block-size);
@@ -30,6 +34,14 @@
   
     svg {
       block-size: 100%;
+
+      @media not (prefers-reduced-motion: reduce) {
+        & > g {
+          *, * g {
+            transition: fill var(--_anim_time_2) ease;
+          }
+        }
+      }
     }
 
     &:has(~ .site-nav-toggle[aria-expanded='true']) {
@@ -58,17 +70,19 @@
       z-index: 999;
 
       rect {
-        --_anim_time_1: .25s;
-        --_anim_time_2: .2s;
         fill: currentColor;
         width: 10px;
         height: var(--_line-height);
         rx: calc(var(--_line-height) / 2);
-        transition:
-          rotate var(--_anim_time_2) ease,
-          y var(--_anim_time_1) ease var(--_anim_time_2),
-          width 0s linear var(--_anim_time_2);
         transform-origin: center center;
+
+        @media not (prefers-reduced-motion: reduce) {
+          transition:
+            rotate var(--_anim_time_2) ease,
+            y var(--_anim_time_1) ease var(--_anim_time_2),
+            width 0s linear var(--_anim_time_2),
+            fill var(--_anim_time_2) ease;
+        }
       
         &:nth-child(1) {
           y: 0px;
@@ -89,10 +103,13 @@
     &[aria-expanded='true'] {
       svg rect {
         fill: #fff !important;
-        transition:
-          rotate var(--_anim_time_1) ease var(--_anim_time_2),
-          y var(--_anim_time_1) ease,
-          width 0s linear var(--_anim_time_1);
+
+        @media not (prefers-reduced-motion: reduce) {
+          transition:
+            rotate var(--_anim_time_1) ease var(--_anim_time_2),
+            y var(--_anim_time_1) ease,
+            width 0s linear var(--_anim_time_1);
+        }
 
         &:nth-child(1) {
           y: calc(5px - var(--_line-height) * 0.5);
@@ -122,20 +139,64 @@
   color: #fff;
   max-block-size: calc(100vh - var(--_inset) * 2);
   overflow: hidden;
+  scale: 1 0;
+  opacity: 0;
+  transform-origin: top center;
+
+  @media not (prefers-reduced-motion: reduce) {
+    transition:
+      scale var(--_anim_time_1) ease,
+      opacity var(--_anim_time_2) ease;
+  }
+
+  @at-root .site-nav-toggle[aria-expanded='true'] + & {
+    scale: 1;
+    opacity: 1;
+
+    @media not (prefers-reduced-motion: reduce) {
+      transition:
+        scale var(--_anim_time_1) ease,
+        opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
+    }
+  }
 
   li {
     list-style: none;
     position: relative;
 
-    &:where([aria-current], :has([aria-current])) > :where(a, button) {
-      color: pink;
+    %current-marker {
+      text-decoration: underline solid var(--clr-dark-accent-400) .2em;
+      text-underline-offset: .35em;
+    }
+    %current-marker-hover {
+      text-decoration-color: #fff;
+    }
+
+    &[aria-current] > a {
+      @extend %current-marker;
+
+      &:where(:hover, :focus-visible) {
+        @extend %current-marker-hover;
+      }
+    }
+
+    &:has([aria-current]) > button {
+      $_parent: &;
+      
+      span {
+        @extend %current-marker;
+
+        @at-root #{$_parent}:where(:hover, :focus-visible) #{list.nth(list.nth(&, 1), -1)} {
+          @extend %current-marker-hover;
+        }
+      }
     }
 
     & > :where(a, button) {
       display: block;
       inline-size: 100%;
       text-align: start;
-      padding: calc(var(--_padding-inline) / 2) var(--_padding-block);
+      padding: calc(var(--_padding-block) / 3 * 2) var(--_padding-inline);
 
       &:where(:hover, :focus-visible) {
         background: var(--clr-light-accent-200);
@@ -153,7 +214,7 @@
 
       &::before {
         content: map.get($bootstrap-icons-map, 'chevron-down');
-        transform: rotate .25s ease;
+        transition: rotate .25s ease;
       }
       
       &[aria-expanded='true']::before {
@@ -161,10 +222,19 @@
       }
     }
 
+    $_parent: &;
+
     ul {
-      block-size: 0;
       overflow: hidden;
-      padding: 0;
+      display: none;
+
+      & > li > :where(a, button) {
+        padding-inline-start: calc(var(--_padding-inline) + 1.2rem);
+      }
+
+      @at-root #{$_parent} > button[aria-expanded='true'] + #{list.nth(list.nth(&, 1), -1)} {
+        display: revert;
+      }
     }
   }
 }

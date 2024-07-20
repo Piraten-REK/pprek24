@@ -8448,6 +8448,8 @@ body {
 }
 
 .site-header {
+  --_anim_time_1: .25s;
+  --_anim_time_2: .2s;
   --_padding-block: calc(var(--site-padding-inline) * 2 / 3);
   inline-size: 100%;
   block-size: var(--header-block-size);
@@ -8475,6 +8477,11 @@ body {
 .site-title svg {
   block-size: 100%;
 }
+@media not (prefers-reduced-motion: reduce) {
+  .site-title svg > g *, .site-title svg > g * g {
+    transition: fill var(--_anim_time_2) ease;
+  }
+}
 .site-title:has(~ .site-nav-toggle[aria-expanded=true]) svg > g *, .site-title:has(~ .site-nav-toggle[aria-expanded=true]) svg > g * g {
   fill: #fff !important;
 }
@@ -8494,14 +8501,16 @@ body {
   z-index: 999;
 }
 .site-header .site-nav-toggle svg rect {
-  --_anim_time_1: .25s;
-  --_anim_time_2: .2s;
   fill: currentColor;
   width: 10px;
   height: var(--_line-height);
   rx: calc(var(--_line-height) / 2);
-  transition: rotate var(--_anim_time_2) ease, y var(--_anim_time_1) ease var(--_anim_time_2), width 0s linear var(--_anim_time_2);
   transform-origin: center center;
+}
+@media not (prefers-reduced-motion: reduce) {
+  .site-header .site-nav-toggle svg rect {
+    transition: rotate var(--_anim_time_2) ease, y var(--_anim_time_1) ease var(--_anim_time_2), width 0s linear var(--_anim_time_2), fill var(--_anim_time_2) ease;
+  }
 }
 .site-header .site-nav-toggle svg rect:nth-child(1) {
   y: 0px;
@@ -8516,7 +8525,11 @@ body {
 }
 .site-header .site-nav-toggle[aria-expanded=true] svg rect {
   fill: #fff !important;
-  transition: rotate var(--_anim_time_1) ease var(--_anim_time_2), y var(--_anim_time_1) ease, width 0s linear var(--_anim_time_1);
+}
+@media not (prefers-reduced-motion: reduce) {
+  .site-header .site-nav-toggle[aria-expanded=true] svg rect {
+    transition: rotate var(--_anim_time_1) ease var(--_anim_time_2), y var(--_anim_time_1) ease, width 0s linear var(--_anim_time_1);
+  }
 }
 .site-header .site-nav-toggle[aria-expanded=true] svg rect:nth-child(1) {
   y: calc(5px - var(--_line-height) * 0.5);
@@ -8542,19 +8555,41 @@ body {
   color: #fff;
   max-block-size: calc(100vh - var(--_inset) * 2);
   overflow: hidden;
+  scale: 1 0;
+  opacity: 0;
+  transform-origin: top center;
 }
+@media not (prefers-reduced-motion: reduce) {
+  .site-nav {
+    transition: scale var(--_anim_time_1) ease, opacity var(--_anim_time_2) ease;
+  }
+}
+.site-nav-toggle[aria-expanded=true] + .site-nav {
+  scale: 1;
+  opacity: 1;
+}
+@media not (prefers-reduced-motion: reduce) {
+  .site-nav-toggle[aria-expanded=true] + .site-nav {
+    transition: scale var(--_anim_time_1) ease, opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
+  }
+}
+
 .site-nav li {
   list-style: none;
   position: relative;
 }
-.site-nav li:where([aria-current], :has([aria-current])) > :where(a, button) {
-  color: pink;
+.site-nav li:has([aria-current]) > button span, .site-nav li[aria-current] > a {
+  text-decoration: underline solid var(--clr-dark-accent-400) 0.2em;
+  text-underline-offset: 0.35em;
+}
+.site-nav li:has([aria-current]) > button:where(:hover, :focus-visible) span, .site-nav li[aria-current] > a:where(:hover, :focus-visible) {
+  text-decoration-color: #fff;
 }
 .site-nav li > :where(a, button) {
   display: block;
   inline-size: 100%;
   text-align: start;
-  padding: calc(var(--_padding-inline) / 2) var(--_padding-block);
+  padding: calc(var(--_padding-block) / 3 * 2) var(--_padding-inline);
 }
 .site-nav li > :where(a, button):where(:hover, :focus-visible) {
   background: var(--clr-light-accent-200);
@@ -8569,15 +8604,20 @@ body {
 }
 .site-nav li > button[aria-haspopup=true]::before {
   content: "\f282";
-  transform: rotate 0.25s ease;
+  transition: rotate 0.25s ease;
 }
 .site-nav li > button[aria-haspopup=true][aria-expanded=true]::before {
   rotate: -180deg;
 }
 .site-nav li ul {
-  block-size: 0;
   overflow: hidden;
-  padding: 0;
+  display: none;
+}
+.site-nav li ul > li > :where(a, button) {
+  padding-inline-start: calc(var(--_padding-inline) + 1.2rem);
+}
+.site-nav li > button[aria-expanded=true] + ul {
+  display: revert;
 }
 
 /*# sourceMappingURL=app.css.map */
