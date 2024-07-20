@@ -172,6 +172,21 @@
       text-decoration-color: #fff;
     }
 
+    [role='separator'] {
+      padding-block: .5em;
+      padding-inline-end: var(--_padding-inline);
+      color: var(--clr-dark-txt-200);
+
+      &::before {
+        content: '';
+        display: block;
+        inline-size: 100%;
+        block-size: .05em;
+        background-color: currentColor;
+        border-radius: 100vmax;
+      }
+    }
+
     &[aria-current] > a {
       @extend %current-marker;
 
@@ -228,7 +243,8 @@
       overflow: hidden;
       display: none;
 
-      & > li > :where(a, button) {
+      & > li > :where(a, button),
+      & > li[role="separator"] {
         padding-inline-start: calc(var(--_padding-inline) + 1.2rem);
       }
 

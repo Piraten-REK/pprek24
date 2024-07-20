@@ -8585,6 +8585,19 @@ body {
 .site-nav li:has([aria-current]) > button:where(:hover, :focus-visible) span, .site-nav li[aria-current] > a:where(:hover, :focus-visible) {
   text-decoration-color: #fff;
 }
+.site-nav li [role=separator] {
+  padding-block: 0.5em;
+  padding-inline-end: var(--_padding-inline);
+  color: var(--clr-dark-txt-200);
+}
+.site-nav li [role=separator]::before {
+  content: "";
+  display: block;
+  inline-size: 100%;
+  block-size: 0.05em;
+  background-color: currentColor;
+  border-radius: 100vmax;
+}
 .site-nav li > :where(a, button) {
   display: block;
   inline-size: 100%;
@@ -8613,7 +8626,7 @@ body {
   overflow: hidden;
   display: none;
 }
-.site-nav li ul > li > :where(a, button) {
+.site-nav li ul > li > :where(a, button), .site-nav li ul > li[role=separator] {
   padding-inline-start: calc(var(--_padding-inline) + 1.2rem);
 }
 .site-nav li > button[aria-expanded=true] + ul {
