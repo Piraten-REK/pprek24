@@ -1,5 +1,6 @@
 import typescript from '@rollup/plugin-typescript'
 import terser from '@rollup/plugin-terser'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 /** @type {string[]} */
 const args = process.argv
 
@@ -14,6 +15,7 @@ export default [
       sourcemap: dev
     },
     plugins: [
+      nodeResolve(),
       typescript({
         tsconfig: './tsconfig.json'
       }),

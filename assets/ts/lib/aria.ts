@@ -24,7 +24,7 @@ export function toggleExpanded (element: AnyElement): BoolString {
 }
 
 export function getExpanded (element: AnyElement): boolean {
-  return Boolean(element.getAttribute(AriaAttributes.ARIA_EXPANDED))
+  return element.getAttribute(AriaAttributes.ARIA_EXPANDED) === 'true'
 }
 
 export function setExpanded (element: AnyElement, value: BoolString | boolean): void {

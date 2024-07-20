@@ -1,4 +1,4 @@
-import { AriaAttributes, setExpanded, toggleExpanded } from './aria'
+import { AriaAttributes, getExpanded, setExpanded, toggleExpanded } from './aria'
 
 type MenuStructure = Array<
 | {
@@ -118,7 +118,7 @@ function setClickHandlers (structure: MenuStructure, currentIndex: number[], dep
   }
 }
 
-export default function setUpMenu (menu: HTMLUListElement, toggle: HTMLButtonElement): void {
+export default function setUpMenu (menu: HTMLUListElement, toggle: HTMLButtonElement): { [method in 'open' | 'close' | 'toggle']: () => void } & { status: boolean } {
   const structure = setUpMenuStructure(menu, toggle)
   const currentIndex: number[] = []
 
@@ -189,4 +189,31 @@ export default function setUpMenu (menu: HTMLUListElement, toggle: HTMLButtonEle
       }
     }
   })
+
+  return {
+    open () {
+      setExpanded(toggle, true)
+      structure[0].element.focus()
+      currentIndex.splice(0, currentIndex.length, 0)
+    },
+    close () {
+      setExpanded(toggle, false)
+      toggle.focus()
+      currentIndex.splice(0, currentIndex.length)
+    },
+    toggle () {
+      const state = toggleExpanded(toggle)
+
+      if (state === 'true') {
+        structure[0].element.focus()
+        currentIndex.splice(0, currentIndex.length, 0)
+      } else {
+        toggle.focus()
+        currentIndex.splice(0, currentIndex.length)
+      }
+    },
+    get status () {
+      return getExpanded(toggle)
+    }
+  }
 }

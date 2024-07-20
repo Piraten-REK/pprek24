@@ -1,3 +1,135 @@
+/**
+ * Returns the owner document of a given element.
+ * 
+ * @param node the element
+ */
+function ownerDocument(node) {
+  return node && node.ownerDocument || document;
+}
+
+var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+
+/* eslint-disable no-return-assign */
+var optionsSupported = false;
+var onceSupported = false;
+
+try {
+  var options = {
+    get passive() {
+      return optionsSupported = true;
+    },
+
+    get once() {
+      // eslint-disable-next-line no-multi-assign
+      return onceSupported = optionsSupported = true;
+    }
+
+  };
+
+  if (canUseDOM) {
+    window.addEventListener('test', options, options);
+    window.removeEventListener('test', options, true);
+  }
+} catch (e) {
+  /* */
+}
+
+/**
+ * An `addEventListener` ponyfill, supports the `once` option
+ * 
+ * @param node the element
+ * @param eventName the event name
+ * @param handle the handler
+ * @param options event options
+ */
+function addEventListener(node, eventName, handler, options) {
+  if (options && typeof options !== 'boolean' && !onceSupported) {
+    var once = options.once,
+        capture = options.capture;
+    var wrappedHandler = handler;
+
+    if (!onceSupported && once) {
+      wrappedHandler = handler.__once || function onceHandler(event) {
+        this.removeEventListener(eventName, onceHandler, capture);
+        handler.call(this, event);
+      };
+
+      handler.__once = wrappedHandler;
+    }
+
+    node.addEventListener(eventName, wrappedHandler, optionsSupported ? options : capture);
+  }
+
+  node.addEventListener(eventName, handler, options);
+}
+
+/**
+ * A `removeEventListener` ponyfill
+ * 
+ * @param node the element
+ * @param eventName the event name
+ * @param handle the handler
+ * @param options event options
+ */
+function removeEventListener(node, eventName, handler, options) {
+  var capture = options && typeof options !== 'boolean' ? options.capture : options;
+  node.removeEventListener(eventName, handler, capture);
+
+  if (handler.__once) {
+    node.removeEventListener(eventName, handler.__once, capture);
+  }
+}
+
+function listen(node, eventName, handler, options) {
+  addEventListener(node, eventName, handler, options);
+  return function () {
+    removeEventListener(node, eventName, handler, options);
+  };
+}
+
+/* https://github.com/component/raf */
+var prev = new Date().getTime();
+
+function fallback(fn) {
+  var curr = new Date().getTime();
+  var ms = Math.max(0, 16 - (curr - prev));
+  var handle = setTimeout(fn, ms);
+  prev = curr;
+  return handle;
+}
+
+var vendors = ['', 'webkit', 'moz', 'o', 'ms'];
+var rafImpl = fallback; // eslint-disable-next-line import/no-mutable-exports
+
+var getKey = function getKey(vendor, k) {
+  return vendor + (!vendor ? k : k[0].toUpperCase() + k.substr(1)) + "AnimationFrame";
+};
+
+if (canUseDOM) {
+  vendors.some(function (vendor) {
+    var rafMethod = getKey(vendor, 'request');
+
+    if (rafMethod in window) {
+      getKey(vendor, 'cancel'); // @ts-ignore
+
+      rafImpl = function rafImpl(cb) {
+        return window[rafMethod](cb);
+      };
+    }
+
+    return !!rafImpl;
+  });
+}
+
+Function.prototype.bind.call(Function.prototype.call, [].slice);
+
+Function.prototype.bind.call(Function.prototype.call, [].slice);
+
+function handleOutsideClick(element, eventHandler) {
+    const doc = ownerDocument(element);
+    return listen(doc, 'click', eventHandler, true);
+}
+
 var AriaAttributes;
 (function (AriaAttributes) {
     AriaAttributes["ARIA_CONTROLS"] = "aria-controls";
@@ -9,6 +141,9 @@ function toggleExpanded(element) {
     const newValue = (!current).toString();
     element.setAttribute(AriaAttributes.ARIA_EXPANDED, newValue);
     return newValue;
+}
+function getExpanded(element) {
+    return element.getAttribute(AriaAttributes.ARIA_EXPANDED) === 'true';
 }
 function setExpanded(element, value) {
     element.setAttribute(AriaAttributes.ARIA_EXPANDED, value.toString());
@@ -164,9 +299,48 @@ function setUpMenu(menu, toggle) {
             }
         }
     });
+    return {
+        open() {
+            setExpanded(toggle, true);
+            structure[0].element.focus();
+            currentIndex.splice(0, currentIndex.length, 0);
+        },
+        close() {
+            setExpanded(toggle, false);
+            toggle.focus();
+            currentIndex.splice(0, currentIndex.length);
+        },
+        toggle() {
+            const state = toggleExpanded(toggle);
+            if (state === 'true') {
+                structure[0].element.focus();
+                currentIndex.splice(0, currentIndex.length, 0);
+            }
+            else {
+                toggle.focus();
+                currentIndex.splice(0, currentIndex.length);
+            }
+        },
+        get status() {
+            return getExpanded(toggle);
+        }
+    };
 }
 
-const siteNav = document.querySelector('.site-nav');
+const siteNavList = document.querySelector('.site-nav');
 const siteNavToggle = document.querySelector('.site-nav-toggle');
-setUpMenu(siteNav, siteNavToggle);
+const siteNav = setUpMenu(siteNavList, siteNavToggle);
+handleOutsideClick(siteNavList, event => {
+    if (!siteNav.status) {
+        return;
+    }
+    let node = event.target;
+    while (node != null && node.nodeType !== Node.DOCUMENT_NODE) {
+        if (node === siteNavList) {
+            return;
+        }
+        node = node.parentElement ?? null;
+    }
+    siteNav.close();
+});
 //# sourceMappingURL=app.js.map
