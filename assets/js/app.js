@@ -336,7 +336,7 @@ handleOutsideClick(siteNavList, event => {
     }
     let node = event.target;
     while (node != null && node.nodeType !== Node.DOCUMENT_NODE) {
-        if (node === siteNavList) {
+        if (node === siteNavList || node === siteNavToggle) {
             return;
         }
         node = node.parentElement ?? null;
