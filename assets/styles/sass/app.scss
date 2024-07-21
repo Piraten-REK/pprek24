@@ -198,4 +198,8 @@ a {
   color: var(--clr-accent-400);
 }
 
+.nobr {
+  white-space: nowrap;
+}
+
 @import 'header';
