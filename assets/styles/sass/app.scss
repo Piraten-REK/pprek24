@@ -78,6 +78,11 @@ body {
   flex-direction: column;
 }
 
+main {
+  flex: 1 0 auto;
+  padding-block: min(calc(var(--site-padding-inline) * 1.25), 2rem);
+}
+
 .layout {
   display: grid;
   grid-template-columns: [full-width-start breakout-left-start] var(--layout-padding-start, var(--site-padding-inline)) [content-start breakout-right-start] 1fr [content-end breakout-left-end] var(--layout-padding-end, var(--site-padding-inline)) [full-width-end breakout-right-end];
