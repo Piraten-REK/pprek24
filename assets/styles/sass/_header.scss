@@ -9,13 +9,14 @@
   --_padding-block: calc(var(--site-padding-inline) * 2 / 3);
   inline-size: 100%;
   block-size: var(--header-block-size);
-  background: var(--clr-site-bg);
+  background: white;
   padding: var(--_padding-block) var(--site-padding-inline);
   position: relative;
   isolation: isolate;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 0px var(--clr-light-txt-100);
 
   a:not(.btn) {
     color: currentColor;
@@ -133,15 +134,16 @@
   --_padding-inline: var(--site-padding-inline);
   position: absolute;
   inset: var(--_inset) var(--_inset) auto;
-  background: hsl(0 0% 0% / 85%);
+  background: var(--clr-nav-bg);
   border-radius: .5rem;
   padding-block-start: var(--header-block-size);
-  color: #fff;
+  color: var(--clr-nav-txt);
   max-block-size: calc(100vh - var(--_inset) * 2);
   overflow: hidden;
   scale: 1 0;
   opacity: 0;
   transform-origin: top center;
+  backdrop-filter: blur(.25rem);
 
   @media not (prefers-reduced-motion: reduce) {
     transition:
@@ -187,22 +189,23 @@
       }
     }
 
-    &[aria-current] > a {
-      @extend %current-marker;
+    &:has([aria-current]) {
+      & > a {
+        @extend %current-marker;
 
       &:where(:hover, :focus-visible) {
         @extend %current-marker-hover;
       }
-    }
-
-    &:has([aria-current]) > button {
-      $_parent: &;
-      
-      span {
-        @extend %current-marker;
-
-        @at-root #{$_parent}:where(:hover, :focus-visible) #{list.nth(list.nth(&, 1), -1)} {
-          @extend %current-marker-hover;
+      }
+      & > button {
+        $_parent: &;
+        
+        span {
+          @extend %current-marker;
+  
+          @at-root #{$_parent}:where(:hover, :focus-visible) #{list.nth(list.nth(&, 1), -1)} {
+            @extend %current-marker-hover;
+          }
         }
       }
     }
