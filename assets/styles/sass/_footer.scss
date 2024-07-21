@@ -1,0 +1,124 @@
+.site-footer {
+  --_clr-top: var(--clr-accent-800);
+  --_clr-bottom: var(--clr-accent-700);
+  color: white;
+
+  a {
+    &, &:where(:link, :visited) {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    &:where(:hover, :focus-visible) {
+      text-decoration: underline var(--clr-dark-accent-300);
+      text-underline-offset: .2em;
+    }
+  }
+
+  & > * {
+    padding-inline: var(--site-padding-inline);
+  }
+
+  h2 {
+    font-size: 1.2em;
+    letter-spacing: .02em;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  &_social {
+    --_size: 1.2rem;
+    grid-area: social;
+    background-color: var(--_clr-top);
+    padding-block: calc(var(--site-padding-inline) * 2);
+    display: flex;
+    justify-content: center;
+    gap: var(--_size);
+
+    a {
+      display: grid;
+      inline-size: calc(2 * var(--_size));
+      aspect-ratio: 1;
+      place-items: center;
+      font-size: var(--_size);
+
+      &:where(:hover, :active) {
+        background: hsl(0 100% 100% / 10%);
+        color: var(--clr-dark-accent-300);
+        text-decoration: none;
+      }
+    }
+  }
+
+  %links {
+    background-color: var(--_clr-top);
+    padding-block-end: calc(var(--site-padding-inline) * 2);
+
+    ul li {
+      list-style: none;
+      line-height: 2;
+    }
+
+    a {
+      &, &:where(:link, :visited) {
+        text-decoration: none;
+      }
+
+      &:where(:hover, :focus-visible) {
+        text-decoration: underline var(--clr-dark-accent-300);
+        text-underline-offset: .2em;
+      }
+    }
+  }
+
+  &_links-1 {
+    grid-area: links_1;
+    @extend %links;
+  }
+
+  &_links-2 {
+    grid-area: links_2;
+    @extend %links;
+  }
+
+  &_copyright {
+    grid-area: copyright;
+    background-color: var(--_clr-bottom);
+    padding-block: calc(var(--site-padding-inline) * 2) calc(var(--site-padding-inline) * 2 / 3);
+  }
+
+  &_license {
+    --_icon-size: 1.2em;
+    --_icon-gap: .4em;
+    grid-area: license;
+    background-color: var(--_clr-bottom);
+    display: grid;
+    grid-template-columns: [icons-start] calc(var(--_icon-size) * var(--_icon-count, 2) + var(--_icon-gap) * (var(--_icon-count, 2) - 1)) [icons-end text-start] auto [text-end];
+    gap: .75em;
+    align-items: start;
+
+    &-icons {
+      grid-column: icons;
+      display: flex;
+      gap: var(--_icon-gap);
+      block-size: 1lh;
+      align-items: center;
+
+      svg {
+        block-size: var(--_icon-size);
+      }
+    }
+  }
+
+  &_legal {
+    grid-area: legal;
+    background-color: var(--_clr-bottom);
+    padding-block: calc(var(--site-padding-inline) * 1.5) var(--site-padding-inline);
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: .8rem
+  }
+}
