@@ -1,0 +1,113 @@
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:map';
+
+$colormap: (
+  'accent': (
+    200: hsl(21 98% 60%) hsl(32 100% 70%),
+    300: hsl(21 98% 50%) hsl(32 100% 60%),
+    400: hsl(21 98% 40%) hsl(32 100% 50%),
+    700: hsl(21 10% 18%),
+    800: hsl(21 15% 15%),
+  ),
+  'txt': (
+    50: hsl(32 100% 99.5%),
+    100: hsl(32 8% 80%),
+    200: hsl(30 8% 67%),
+    400: hsl(32 8% 10%)
+  ),
+  'input-bg': hsl(32 100% 98%),
+  'site-bg': 'txt-50' hsl(32 8% 10%),
+  'nav-bg': hsl(32 8% 10% / 95),
+  'nav-txt': white,
+);
+
+@function getColorVar ($theme, $name, $shade) {
+  $name: --clr-#{$theme}-#{$name};
+
+  @if $shade {
+    $name: #{$name}-#{$shade};
+  }
+
+  @return $name;
+}
+
+@mixin light-colors () {
+  @each $name, $shades in $colormap {
+    $var: --clr-light-#{$name};
+
+    @if meta.type-of($shades) == 'list' {
+      $color: list.nth($shades, 1);
+
+      @if meta.type-of($color) == 'string' {
+        #{$var}: var(--clr-light-#{$color});
+      } @else {
+        #{$var}: $color;
+      }
+
+    } @else if meta.type-of($shades) == 'color' {
+      #{$var}: $shades;
+
+    } @else if meta.type-of($shades) == 'string' {
+      #{$var}: var(--clr-light-#{$shades});
+
+    } @else if meta.type-of($shades) == 'map' {
+      @each $shade, $colorList in $shades {
+        #{$var}-#{$shade}: list.nth($colorList, 1);
+      }
+
+    } @else {
+      @error 'colormap has wrong structure';
+    }
+  }
+}
+
+@mixin dark-colors () {
+  @each $name, $shades in $colormap {
+    $var: --clr-dark-#{$name};
+
+    @if meta.type-of($shades) == 'list' {
+      $color: list.nth($shades, 2);
+
+      @if meta.type-of($color) == 'string' {
+        #{$var}: var(--clr-dark-#{$color});
+      } @else {
+        #{$var}: $color;
+      }
+
+    } @else if meta.type-of($shades) == 'color' {
+      #{$var}: $shades;
+
+    } @else if meta.type-of($shades) == 'string' {
+      #{$var}: var(--clr-dark-#{$shades});
+
+    } @else if meta.type-of($shades) == 'map' {
+      @each $shade, $colorList in $shades {
+        @if meta.type-of($colorList) == 'list' {
+          #{$var}-#{$shade}: list.nth($colorList, 2);
+        } @else {
+          #{$var}-#{$shade}: $colorList;
+        }
+      }
+      
+    } @else {
+      @error 'colormap has wrong structure';
+    }
+  }
+}
+
+@mixin set-theme ($theme: light) {
+  @each $name, $shades in $colormap {
+    $var: --clr-#{$name};
+    $theme-name: --clr-#{$theme}-#{$name};
+
+    @if meta.type-of($shades) == 'map' {
+      @each $shade in map.keys($shades) {
+        #{$var}-#{$shade}: var(#{$theme-name}-#{$shade});
+      }
+
+    } @else {
+      #{$var}: var(#{$theme-name});
+    }
+  }
+}
