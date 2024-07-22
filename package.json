@@ -8,7 +8,8 @@
     "ts:dev": "rollup -c --config-dev",
     "dev": "rollup -c --config-dev --watch",
     "sass": "sass assets/styles/sass/:assets/styles/",
-    "sass:watch": "sass assets/styles/sass/:assets/styles/ -w"
+    "sass:watch": "sass assets/styles/sass/:assets/styles/ -w",
+    "postinstall": "./link_icon_fonts.sh"
   },
   "keywords": [],
   "author": "",
