@@ -327,7 +327,7 @@ function setUpMenu(menu, toggle) {
     };
 }
 
-const siteNavList = document.querySelector('.site-nav');
+const siteNavList = document.querySelector('.site-nav ul');
 const siteNavToggle = document.querySelector('.site-nav-toggle');
 const siteNav = setUpMenu(siteNavList, siteNavToggle);
 handleOutsideClick(siteNavList, event => {

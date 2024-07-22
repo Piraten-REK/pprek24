@@ -1,7 +1,7 @@
 import handleOutsideClick from './lib/handleOutsideClick'
 import setUpMenu from './lib/menu'
 
-const siteNavList = document.querySelector('.site-nav') as HTMLUListElement
+const siteNavList = document.querySelector('.site-nav ul') as HTMLUListElement
 const siteNavToggle = document.querySelector('.site-nav-toggle') as HTMLButtonElement
 const siteNav = setUpMenu(siteNavList, siteNavToggle)
 
