@@ -8588,95 +8588,32 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
   rotate: 45deg;
 }
 
-.site-nav {
-  --_border-radius: .75em;
-  --_inset: calc(var(--site-padding-inline) / 2);
-  --_padding-inline: var(--site-padding-inline);
-  position: absolute;
-  inset: var(--_inset) var(--_inset) auto;
-  background: var(--clr-nav-bg);
-  border-radius: 0.5rem;
-  padding-block-start: var(--header-block-size);
-  color: var(--clr-nav-txt);
-  max-block-size: calc(100vh - var(--_inset) * 2);
-  overflow: hidden;
-  scale: 1 0;
-  opacity: 0;
-  transform-origin: top center;
-  backdrop-filter: blur(0.25rem);
-}
-@media not (prefers-reduced-motion: reduce) {
-  .site-nav {
-    transition: scale var(--_anim_time_1) ease, opacity var(--_anim_time_2) ease;
-  }
-}
-.site-nav-toggle[aria-expanded=true] + .site-nav {
-  scale: 1;
-  opacity: 1;
-}
-@media not (prefers-reduced-motion: reduce) {
-  .site-nav-toggle[aria-expanded=true] + .site-nav {
-    transition: scale var(--_anim_time_1) ease, opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
-  }
-}
-
 .site-nav li {
   list-style: none;
-  position: relative;
 }
-.site-nav li:has([aria-current]) > button span, .site-nav li:has([aria-current]) > a {
-  text-decoration: underline solid var(--clr-dark-accent-400) 0.2em;
-  text-underline-offset: 0.35em;
+.site-nav > ul {
+  display: flex;
 }
-.site-nav li:has([aria-current]) > button:where(:hover, :focus-visible) span, .site-nav li:has([aria-current]) > a:where(:hover, :focus-visible) {
-  text-decoration-color: #fff;
-}
-.site-nav li [role=separator] {
-  padding-block: 0.5em;
-  padding-inline-end: var(--_padding-inline);
-  color: var(--clr-dark-txt-200);
-}
-.site-nav li [role=separator]::before {
-  content: "";
-  display: block;
-  inline-size: 100%;
-  block-size: 0.05em;
-  background-color: currentColor;
-  border-radius: 100vmax;
-}
-.site-nav li > :where(a, button) {
-  display: block;
-  inline-size: 100%;
-  text-align: start;
-  padding: calc(var(--_padding-block) / 3 * 2) var(--_padding-inline);
-}
-.site-nav li > :where(a, button):where(:hover, :focus-visible) {
-  background: var(--clr-light-accent-200);
-  outline: none;
-}
-.site-nav li > button[aria-haspopup=true] {
+.site-nav > ul > li :where(a, button) {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  column-gap: 1ch;
-  flex-direction: row-reverse;
+  padding-inline: 0.5em;
+  font-size: 1.2em;
+  font-weight: 500;
+  letter-spacing: 0.03em;
 }
-.site-nav li > button[aria-haspopup=true]::before {
-  content: "\f282";
-  transition: rotate 0.25s ease;
+.site-nav > ul > li :where(a, button):where(:hover, :focus-visible) {
+  background-color: hsl(from var(--clr-light-txt-100) h s l/33.333%);
 }
-.site-nav li > button[aria-haspopup=true][aria-expanded=true]::before {
-  rotate: -180deg;
+.site-nav, .site-nav > ul, .site-nav > ul > li, .site-nav > ul > li :where(a, button) {
+  block-size: 100%;
+}
+
+.site-nav > ul > li:has([aria-current]) > :where(a, button) {
+  box-shadow: inset 0 -0.2em 0 var(--clr-accent-400);
 }
 .site-nav li ul {
-  overflow: hidden;
   display: none;
-}
-.site-nav li ul > li > :where(a, button), .site-nav li ul > li[role=separator] {
-  padding-inline-start: calc(var(--_padding-inline) + 1.2rem);
-}
-.site-nav li > button[aria-expanded=true] + ul {
-  display: revert;
 }
 
 .site-footer {
