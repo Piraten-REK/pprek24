@@ -138,6 +138,11 @@
 .site-nav {
   $selectors: (&);
 
+  // TODO: ONLY FOR TESTING, REMOVE LATER
+  @include mixins.mobile-nav {
+    display: none;
+  }
+
   li {
     list-style: none;
   }
