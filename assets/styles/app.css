@@ -9,7 +9,7 @@
   font-family: "bootstrap-icons";
   src: url("/assets/fonts/bootstrap-icons.woff2?24e3eb84d0bcaf83d77f904c78ac1f47") format("woff2"), url("/assets/fonts/bootstrap-icons.woff?24e3eb84d0bcaf83d77f904c78ac1f47") format("woff");
 }
-.bi::before, .site-nav li > button[aria-haspopup=true]::before,
+.bi::before,
 [class^=bi-]::before,
 [class*=" bi-"]::before {
   display: inline-block;
@@ -8490,7 +8490,7 @@ a {
   inline-size: 100%;
   block-size: var(--header-block-size);
   background: white;
-  padding: var(--_padding-block) var(--site-padding-inline);
+  padding: 0 var(--outer-padding-inline);
   position: relative;
   isolation: isolate;
   display: flex;
@@ -8503,6 +8503,7 @@ a {
   text-decoration: none;
 }
 .site-title {
+  padding-block: var(--_padding-block);
   block-size: 100%;
   position: relative;
   z-index: 999;
