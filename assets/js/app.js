@@ -34,59 +34,6 @@ try {
   /* */
 }
 
-/**
- * An `addEventListener` ponyfill, supports the `once` option
- * 
- * @param node the element
- * @param eventName the event name
- * @param handle the handler
- * @param options event options
- */
-function addEventListener(node, eventName, handler, options) {
-  if (options && typeof options !== 'boolean' && !onceSupported) {
-    var once = options.once,
-        capture = options.capture;
-    var wrappedHandler = handler;
-
-    if (!onceSupported && once) {
-      wrappedHandler = handler.__once || function onceHandler(event) {
-        this.removeEventListener(eventName, onceHandler, capture);
-        handler.call(this, event);
-      };
-
-      handler.__once = wrappedHandler;
-    }
-
-    node.addEventListener(eventName, wrappedHandler, optionsSupported ? options : capture);
-  }
-
-  node.addEventListener(eventName, handler, options);
-}
-
-/**
- * A `removeEventListener` ponyfill
- * 
- * @param node the element
- * @param eventName the event name
- * @param handle the handler
- * @param options event options
- */
-function removeEventListener(node, eventName, handler, options) {
-  var capture = options && typeof options !== 'boolean' ? options.capture : options;
-  node.removeEventListener(eventName, handler, capture);
-
-  if (handler.__once) {
-    node.removeEventListener(eventName, handler.__once, capture);
-  }
-}
-
-function listen(node, eventName, handler, options) {
-  addEventListener(node, eventName, handler, options);
-  return function () {
-    removeEventListener(node, eventName, handler, options);
-  };
-}
-
 /* https://github.com/component/raf */
 var prev = new Date().getTime();
 
@@ -127,7 +74,8 @@ Function.prototype.bind.call(Function.prototype.call, [].slice);
 
 function handleOutsideClick(element, eventHandler) {
     const doc = ownerDocument(element);
-    return listen(doc, 'click', eventHandler, true);
+    doc.addEventListener('click', eventHandler, true);
+    return () => removeEventListener('click', eventHandler);
 }
 
 var AriaAttributes;
@@ -327,6 +275,24 @@ function setUpMenu(menu, toggle) {
     };
 }
 
+function innerWidth(element) {
+    const outerWidth = element.clientWidth;
+    const styles = getComputedStyle(element);
+    const borderInline = [styles.borderInlineStartWidth, styles.borderInlineEndWidth]
+        .reduce((prev, cur) => prev + parseFloat(cur), 0);
+    const paddingInline = [styles.paddingInlineStart, styles.paddingInlineEnd]
+        .reduce((prev, cur) => prev + parseFloat(cur), 0);
+    return outerWidth - borderInline - paddingInline;
+}
+function em(element, value) {
+    const em1 = parseFloat(getComputedStyle(element).fontSize);
+    return value * em1;
+}
+function rem(value) {
+    return em(document.documentElement, value);
+}
+
+const HEADER_PADDING = rem(4);
 const siteNavList = document.querySelector('.site-nav ul');
 const siteNavToggle = document.querySelector('.site-nav-toggle');
 const siteNav = setUpMenu(siteNavList, siteNavToggle);
@@ -343,4 +309,16 @@ handleOutsideClick(siteNavList, event => {
     }
     siteNav.close();
 });
+const siteNavNav = document.querySelector('.site-nav');
+const navWidth = siteNavNav.clientWidth;
+function siteNavWatcher() {
+    const headerElement = document.querySelector('.site-header');
+    const headerWidth = innerWidth(headerElement);
+    const titleElement = document.querySelector('.site-title');
+    const titleWidth = titleElement.clientWidth;
+    const delta = headerWidth - titleWidth - HEADER_PADDING;
+    document.body.setAttribute('data-mobile-nav', (navWidth > delta).toString());
+    return siteNavWatcher;
+}
+window.addEventListener('resize', siteNavWatcher());
 //# sourceMappingURL=app.js.map

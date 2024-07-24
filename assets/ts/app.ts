@@ -1,5 +1,8 @@
 import handleOutsideClick from './lib/handleOutsideClick'
 import setUpMenu from './lib/menu'
+import { innerWidth, rem } from './lib/styles'
+
+const HEADER_PADDING = rem(4)
 
 const siteNavList = document.querySelector('.site-nav ul') as HTMLUListElement
 const siteNavToggle = document.querySelector('.site-nav-toggle') as HTMLButtonElement
@@ -21,3 +24,19 @@ handleOutsideClick(siteNavList, event => {
 
   siteNav.close()
 })
+
+const siteNavNav = document.querySelector('.site-nav') as HTMLAreaElement
+const navWidth = siteNavNav.clientWidth
+
+function siteNavWatcher (): (() => void) {
+  const headerElement = document.querySelector('.site-header') as HTMLAreaElement
+  const headerWidth = innerWidth(headerElement)
+  const titleElement = document.querySelector('.site-title') as HTMLDivElement
+  const titleWidth = titleElement.clientWidth
+  const delta = headerWidth - titleWidth - HEADER_PADDING
+
+  document.body.setAttribute('data-mobile-nav', (navWidth > delta).toString())
+
+  return siteNavWatcher
+}
+window.addEventListener('resize', siteNavWatcher())
