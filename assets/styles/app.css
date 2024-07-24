@@ -8529,6 +8529,13 @@ a {
   inset: auto auto 0 var(--site-padding-inline);
   translate: 0 100%;
 }
+.site-header .site-nav-toggle {
+  display: none;
+}
+body[data-mobile-nav=true] .site-header .site-nav-toggle {
+  display: revert;
+}
+
 .site-header .site-nav-toggle svg {
   --_size: 2rem;
   --_line-height: 1.2px;

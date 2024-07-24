@@ -1,4 +1,4 @@
-@use 'mixins' as *;
+@use 'mixins';
 @use 'sass:map';
 @use 'sass:list';
 
@@ -62,6 +62,12 @@
   }
 
   .site-nav-toggle {
+    display: none;
+
+    @include mixins.mobile-nav {
+      display: revert;
+    }
+
     svg {
       --_size: 2rem;
       --_line-height: 1.2px;
