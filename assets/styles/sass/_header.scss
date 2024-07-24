@@ -164,6 +164,7 @@
         font-size: 1.2em;
         font-weight: 500;
         letter-spacing: .03em;
+        white-space: nowrap;
 
         &:where(:hover, :focus-visible) {
           background-color: hsl(from var(--clr-light-txt-100) h s l / 33.333%);

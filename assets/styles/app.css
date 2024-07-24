@@ -8588,6 +8588,10 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
   rotate: 45deg;
 }
 
+body[data-mobile-nav=true] .site-nav {
+  display: none;
+}
+
 .site-nav li {
   list-style: none;
 }
@@ -8601,6 +8605,7 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
   font-size: 1.2em;
   font-weight: 500;
   letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 .site-nav > ul > li :where(a, button):where(:hover, :focus-visible) {
   background-color: hsl(from var(--clr-light-txt-100) h s l/33.333%);
