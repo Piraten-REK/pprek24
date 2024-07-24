@@ -1,7 +1,52 @@
 .site-footer {
-  --_clr-top: var(--clr-accent-800);
-  --_clr-bottom: var(--clr-accent-700);
   color: white;
+
+  & > div {
+    padding-inline: var(--outer-padding-inline);
+    display: grid;
+  }
+
+  &_top {
+    background-color: var(--clr-accent-800);
+    padding-block: calc(var(--site-padding-inline) * 2);
+    grid-template:
+      "social" auto
+      "links" auto
+      / 1fr;
+    gap: calc(var(--site-padding-inline) * 2);
+    
+    @include breakpoint-up(sm) {
+      grid-template:
+        "social social" auto
+        "links_1 links_2" auto
+        / 1fr 1fr;
+    }
+
+    @include breakpoint-up(lg) {
+      grid-template: 
+        "social links_1 links_2" auto
+        / 1fr 1fr 1fr;
+      ;
+    }
+  }
+
+  &_bottom {
+    background-color: var(--clr-accent-700);
+    grid-template: 
+      "copyright" auto
+      "license" auto
+      "legal" auto
+      / 1fr;
+    padding-block: calc(var(--site-padding-inline) * 1.5) var(--site-padding-inline);
+    column-gap: calc(var(--site-padding-inline) * 2);
+
+    @include breakpoint-up(md) {
+      grid-template:
+        "copyright legal" auto
+        "license legal" auto
+        / 2fr 1fr;
+    }
+  }
 
   a {
     &, &:where(:link, :visited) {
@@ -22,6 +67,7 @@
   h2 {
     font-size: 1.2em;
     letter-spacing: .02em;
+    margin-block-end: .5em;
   }
 
   li {
@@ -31,11 +77,13 @@
   &_social {
     --_size: 1.2rem;
     grid-area: social;
-    background-color: var(--_clr-top);
-    padding-block: calc(var(--site-padding-inline) * 2);
     display: flex;
     justify-content: center;
     gap: var(--_size);
+
+    @include breakpoint-up(lg) {
+      justify-self: start;
+    }
 
     a {
       display: grid;
@@ -53,8 +101,9 @@
   }
 
   %links {
-    background-color: var(--_clr-top);
-    padding-block-end: calc(var(--site-padding-inline) * 2);
+    @include breakpoint-up(sm) {
+      justify-self: center;
+    }
 
     ul li {
       list-style: none;
@@ -65,7 +114,7 @@
       &, &:where(:link, :visited) {
         text-decoration: none;
       }
-
+      
       &:where(:hover, :focus-visible) {
         text-decoration: underline var(--clr-dark-accent-300);
         text-underline-offset: .2em;
@@ -73,27 +122,43 @@
     }
   }
 
+  &_links {
+    grid-area: links;
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+    justify-self: center;
+
+    @include breakpoint-up(sm) {
+      display: contents;
+    }
+  }
+  
   &_links-1 {
     grid-area: links_1;
     @extend %links;
-  }
+  } 
 
   &_links-2 {
     grid-area: links_2;
     @extend %links;
+
+    @include breakpoint-up(lg) {
+      .site-footer & {
+        justify-self: end;
+      }
+    }
   }
 
   &_copyright {
     grid-area: copyright;
-    background-color: var(--_clr-bottom);
-    padding-block: calc(var(--site-padding-inline) * 2) calc(var(--site-padding-inline) * 2 / 3);
+    margin-block-end: calc(var(--site-padding-inline) * 0.75);
   }
 
   &_license {
     --_icon-size: 1.2em;
     --_icon-gap: .4em;
     grid-area: license;
-    background-color: var(--_clr-bottom);
     display: grid;
     grid-template-columns: [icons-start] calc(var(--_icon-size) * var(--_icon-count, 2) + var(--_icon-gap) * (var(--_icon-count, 2) - 1)) [icons-end text-start] auto [text-end];
     gap: .75em;
@@ -114,11 +179,16 @@
 
   &_legal {
     grid-area: legal;
-    background-color: var(--_clr-bottom);
-    padding-block: calc(var(--site-padding-inline) * 1.5) var(--site-padding-inline);
     display: flex;
     justify-content: center;
     gap: 1.5rem;
-    font-size: .8rem
+    font-size: .8rem;
+    margin-block-start: calc(var(--site-padding-inline) * 1.5);
+
+    @include breakpoint-up(md) {
+      margin: 0;
+      justify-self: end;
+      align-self: end;
+    }
   }
 }
