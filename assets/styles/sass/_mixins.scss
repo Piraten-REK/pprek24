@@ -1,5 +1,17 @@
-@mixin mobileMenu ($state: true) {
-  @at-root body[data-menu-open='#{$state}'] & {
+@mixin body-class ($class) {
+  @at-root body.#{$class} & {
+    @content;
+  }
+}
+
+@mixin body-attribute ($attribute, $value, $operator: '=') {
+  @at-root body[#{unquote("#{$attribute}#{$operator}'#{$value}'")}] & {
+    @content;
+  }
+}
+
+@mixin mobile-nav ($state: true) {
+  @include body-attribute(data-mobile-nav, $state) {
     @content;
   }
 }
