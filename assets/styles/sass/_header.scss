@@ -184,6 +184,33 @@
   li ul {
     display: none;
   }
+
+  button[aria-haspopup='true'] {
+    @extend .bi;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 1ch;
+    flex-direction: row-reverse;
+
+    &::before {
+      content: map.get($bootstrap-icons-map, 'chevron-down');
+
+      @media not (prefers-reduced-motion: reduce) {
+        transition: rotate .25s ease;
+      }
+    }
+    
+    &[aria-expanded='true'] {
+      & + ul {
+        display: revert;
+      }
+
+      &::before {
+        rotate: -180deg;
+      }
+    }
+  }
 }
 
 // .site-nav {

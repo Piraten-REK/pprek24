@@ -9,7 +9,7 @@
   font-family: "bootstrap-icons";
   src: url("/assets/fonts/bootstrap-icons.woff2?24e3eb84d0bcaf83d77f904c78ac1f47") format("woff2"), url("/assets/fonts/bootstrap-icons.woff?24e3eb84d0bcaf83d77f904c78ac1f47") format("woff");
 }
-.bi::before,
+.bi::before, .site-nav button[aria-haspopup=true]::before,
 [class^=bi-]::before,
 [class*=" bi-"]::before {
   display: inline-block;
@@ -8619,6 +8619,27 @@ body[data-mobile-nav=true] .site-nav {
 }
 .site-nav li ul {
   display: none;
+}
+.site-nav button[aria-haspopup=true] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 1ch;
+  flex-direction: row-reverse;
+}
+.site-nav button[aria-haspopup=true]::before {
+  content: "\f282";
+}
+@media not (prefers-reduced-motion: reduce) {
+  .site-nav button[aria-haspopup=true]::before {
+    transition: rotate 0.25s ease;
+  }
+}
+.site-nav button[aria-haspopup=true][aria-expanded=true] + ul {
+  display: revert;
+}
+.site-nav button[aria-haspopup=true][aria-expanded=true]::before {
+  rotate: -180deg;
 }
 
 .site-footer {
