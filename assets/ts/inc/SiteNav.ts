@@ -37,14 +37,14 @@ type MenuStructure = ReadonlyArray<
 export default class SiteNav {
   readonly headerPadding: number
 
-  static header = document.querySelector('body > .site-header') as HTMLAreaElement
-  static siteTitle = document.querySelector('body > .site-header > .site-title') as HTMLDivElement
-  static toggle = document.querySelector('body > .site-header > .site-nav-toggle') as HTMLButtonElement
-  static nav = document.querySelector('body > .site-header > .site-nav') as HTMLAreaElement
-  static list = document.querySelector('body > .site-header > .site-nav > ul') as HTMLUListElement
-  static structure = SiteNav.getStructure()
+  header = document.querySelector('body > .site-header') as HTMLAreaElement
+  siteTitle = document.querySelector('body > .site-header > .site-title') as HTMLDivElement
+  toggle = document.querySelector('body > .site-header > .site-nav-toggle') as HTMLButtonElement
+  nav = document.querySelector('body > .site-header > .site-nav') as HTMLAreaElement
+  list = document.querySelector('body > .site-header > .site-nav > ul') as HTMLUListElement
+  structure = this.getStructure()
 
-  static navWidth = SiteNav.nav.clientWidth
+  navWidth = this.nav.clientWidth
 
   #mobile = false
   #open = false
@@ -67,7 +67,7 @@ export default class SiteNav {
       this.#mobile = value
       document.body.setAttribute('data-mobile-nav', value.toString())
 
-      for (const elem of SiteNav.firstLevelElements()) {
+      for (const elem of this.firstLevelElements()) {
         if (value) {
           elem.setAttribute('tabindex', '-1')
         } else {
@@ -83,8 +83,7 @@ export default class SiteNav {
 
   set open (value: boolean) {
     if (value !== this.open) {
-      this.#open = value
-      setExpanded(SiteNav.toggle, value)
+      setExpanded(this.toggle, value)
     }
   }
 
@@ -93,9 +92,7 @@ export default class SiteNav {
   }
 
   set closed (value: boolean) {
-    if (value === this.#open) {
-      this.#open = !value
-      setExpanded(SiteNav.toggle, !value)
+      setExpanded(this.toggle, !value)
     }
   }
 
@@ -108,7 +105,7 @@ export default class SiteNav {
       return undefined
     }
 
-    let structure = SiteNav.structure
+    let structure = this.structure
     const idx = this.indices
     const lastIndex = idx.pop() as number
     while (idx.length > 0) {
@@ -119,16 +116,16 @@ export default class SiteNav {
   }
 
   private navWatcher (): (() => void) {
-    const headerWidth = innerWidth(SiteNav.header)
-    const titleWidth = SiteNav.siteTitle.clientWidth
+    const headerWidth = innerWidth(this.header)
+    const titleWidth = this.siteTitle.clientWidth
     const delta = headerWidth - titleWidth - this.headerPadding
 
-    this.mobile = SiteNav.navWidth > delta
+    this.mobile = this.navWidth > delta
 
     return this.navWatcher.bind(this)
   }
 
-  private addClickListeners (structure: MenuStructure = SiteNav.structure, index: number[] = []): void {
+  private addClickListeners (structure: MenuStructure = this.structure, index: number[] = []): void {
     for (let idx = 0, item = structure[0]; idx < structure.length; item = structure[++idx]) {
       if (item.type === 'item') {
         continue
@@ -158,9 +155,7 @@ export default class SiteNav {
 
       this.addClickListeners(item.items, [...index, idx])
     }
-  }
-
-  private static * firstLevelElements (list: HTMLUListElement = SiteNav.list): Generator<HTMLButtonElement | HTMLAnchorElement, void, unknown> {
+  private * firstLevelElements (list: HTMLUListElement = this.list): Generator<HTMLButtonElement | HTMLAnchorElement, void, unknown> {
     for (const child of Array.from(list.children)) {
       for (const grandchild of Array.from(child.children)) {
         if (grandchild instanceof HTMLAnchorElement || grandchild instanceof HTMLButtonElement) {
@@ -170,10 +165,10 @@ export default class SiteNav {
     }
   }
 
-  private static getStructure (list: HTMLUListElement = SiteNav.list, toggle: HTMLButtonElement = SiteNav.toggle): MenuStructure {
+  private getStructure (list: HTMLUListElement = this.list, toggle: HTMLButtonElement = this.toggle): MenuStructure {
     const structure: MutableMenuStructure = []
 
-    for (const item of SiteNav.firstLevelElements(list)) {
+    for (const item of this.firstLevelElements(list)) {
       const hasPopup = use(item.getAttribute(AriaAttributes.ARIA_HASPOPUP), it => it != null && it !== 'false')
 
       if (hasPopup) {
@@ -196,7 +191,7 @@ export default class SiteNav {
           element: item as HTMLButtonElement,
           list: subMenu,
           toggle,
-          items: SiteNav.getStructure(subMenu, item as HTMLButtonElement)
+          items: this.getStructure(subMenu, item as HTMLButtonElement)
         })
       } else {
         structure.push({
