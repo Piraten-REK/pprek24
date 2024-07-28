@@ -134,6 +134,11 @@ if (value === this.open) {
     return structure[lastIndex]
   }
 
+  toggleOpen (): boolean {
+    this.open = this.closed
+    return this.open
+  }
+
   private navWatcher (): (() => void) {
     const headerWidth = innerWidth(this.header)
     const titleWidth = this.siteTitle.clientWidth
