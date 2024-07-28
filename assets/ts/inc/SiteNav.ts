@@ -55,6 +55,12 @@ export default class SiteNav {
 
     window.addEventListener('resize', this.navWatcher())
 
+this.toggle.addEventListener('click', () => {
+      const state = this.toggleOpen()
+      if (state) {
+        this.structure[0].element.focus()
+      }
+    })
     this.addClickListeners()
     this.list.addEventListener('keydown', this.keyboardListener.bind(this))
   }
