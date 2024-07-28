@@ -56,6 +56,7 @@ export default class SiteNav {
     window.addEventListener('resize', this.navWatcher())
 
     this.addClickListeners()
+    this.list.addEventListener('keydown', this.keyboardListener.bind(this))
   }
 
   get mobile (): boolean {
@@ -198,6 +199,110 @@ if (value === this.open) {
 
       this.closed = true
     })
+  }
+
+  private keyboardListener (event: KeyboardEvent): void {
+    if (this.indices.length === 0) {
+      this.setIndicesByElement(event.target as HTMLElement)
+    }
+
+    if (event.key === 'Tab' && !event.shiftKey) {
+      if (this.indices.length === 1) {
+        if (this.mobile) {
+          // mobile
+          event.preventDefault()
+          this.incrementIndex()
+          this.current?.element?.focus()
+        } else {
+          // desktop
+          if (this.indices[0] === this.structure.length - 1) {
+            this.closed = true
+          } else {
+            this.incrementIndex(false)
+          }
+        }
+      } else {
+        event.preventDefault()
+        this.incrementIndex()
+        this.current?.element?.focus()
+      }
+    } else if (event.key === 'Tab' && event.shiftKey) {
+      if (this.indices.length === 1) {
+        if (this.mobile) {
+          // mobile
+          event.preventDefault()
+          this.decrementIndex()
+          this.current?.element?.focus()
+        } else {
+          // desktop
+          if (this.indices[0] === 0) {
+            this.closed = true
+          } else {
+            this.decrementIndex(false)
+          }
+        }
+      } else {
+        event.preventDefault()
+        this.decrementIndex()
+        this.current?.element?.focus()
+      }
+    } else if (event.key === 'Enter' || event.code === 'Space') {
+      if (this.current?.type === 'toggle') {
+        event.preventDefault()
+        setExpanded(this.current.element, true)
+        this.current.items[0].element.focus()
+        this.#indices.push(0)
+      }
+    } else if (event.key === 'Escape') {
+      if (!this.mobile && this.#indices.length === 1) {
+        return
+      }
+      setExpanded(this.current?.toggle as HTMLButtonElement, false)
+      this.current?.toggle?.focus()
+      this.#indices.pop()
+    } else if (event.key === 'ArrowUp') {
+      if (!this.mobile && this.#indices.length === 1) {
+        return
+      }
+      event.preventDefault()
+      this.decrementIndex()
+      this.current?.element?.focus()
+    } else if (event.key === 'ArrowDown') {
+      if (!this.mobile && this.#indices.length === 1) {
+        if (this.current?.type === 'toggle') {
+          event.preventDefault()
+          setExpanded(this.current.element, true)
+          this.current.items[0].element.focus()
+          this.#indices.push(0)
+        }
+        return
+      }
+      event.preventDefault()
+      this.incrementIndex()
+      this.current?.element?.focus()
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      if (this.current?.type !== 'toggle') {
+        return
+      } else if (!this.mobile && this.indices.length === 1) {
+        this.incrementIndex()
+        this.current?.element?.focus()
+        return
+      }
+      setExpanded(this.current.element, true)
+      this.current.items[0].element.focus()
+      this.#indices.push(0)
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      if (!this.mobile && this.indices.length === 1) {
+        this.decrementIndex()
+        this.current?.element?.focus()
+        return
+      }
+      setExpanded(this.current?.toggle as HTMLButtonElement, false)
+      this.current?.toggle?.focus()
+      this.#indices.pop()
+    }
   }
 
   incrementIndex (overflow: boolean = true): void {
