@@ -200,6 +200,34 @@ if (value === this.open) {
     })
   }
 
+  incrementIndex (overflow: boolean = true): void {
+    if (overflow) {
+      let structure = this.structure
+      const idx = this.indices.slice(0, -1)
+      while (idx.length > 0) {
+        structure = (structure[idx.shift() as number] as Extract<MenuStructure[number], { type: 'toggle' }>).items
+      }
+
+      this.#indices[this.#indices.length - 1] = (this.#indices[this.#indices.length - 1] + structure.length + 1) % structure.length
+    } else {
+      this.#indices[this.#indices.length - 1]++
+    }
+  }
+
+  decrementIndex (overflow: boolean = true): void {
+    if (overflow) {
+      let structure = this.structure
+      const idx = this.indices.slice(0, -1)
+      while (idx.length > 0) {
+        structure = (structure[idx.shift() as number] as Extract<MenuStructure[number], { type: 'toggle' }>).items
+      }
+
+      this.#indices[this.#indices.length - 1] = (this.#indices[this.#indices.length - 1] + structure.length - 1) % structure.length
+    } else {
+      this.#indices[this.#indices.length - 1]--
+    }
+  }
+
 
   private * firstLevelElements (list: HTMLUListElement = this.list): Generator<HTMLButtonElement | HTMLAnchorElement, void, unknown> {
     for (const child of Array.from(list.children)) {
