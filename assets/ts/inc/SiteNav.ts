@@ -1,6 +1,7 @@
 import { innerWidth, rem } from '../lib/styles'
 import { AriaAttributes, setExpanded, toggleExpanded } from '../lib/aria'
 import { use } from '../lib/utils'
+import handleOutsideClick from '../lib/handleOutsideClick'
 
 type MutableMenuStructure = Array<
 | {
@@ -179,6 +180,27 @@ if (value === this.open) {
 
       this.addClickListeners(item.items, [...index, idx])
     }
+
+    handleOutsideClick(this.list, event => {
+      if (this.closed) {
+        return
+      }
+
+      let node = event.target as Element | null
+
+      while (node != null && node.nodeType !== Node.DOCUMENT_NODE) {
+        if (node === this.list || node === this.toggle) {
+          return
+        }
+
+        node = node.parentElement
+      }
+
+      this.closed = true
+    })
+  }
+
+
   private * firstLevelElements (list: HTMLUListElement = this.list): Generator<HTMLButtonElement | HTMLAnchorElement, void, unknown> {
     for (const child of Array.from(list.children)) {
       for (const grandchild of Array.from(child.children)) {
