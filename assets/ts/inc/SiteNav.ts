@@ -47,7 +47,6 @@ export default class SiteNav {
   navWidth = this.nav.clientWidth
 
   #mobile = false
-  #open = false
   #indices: number[] = []
 
   constructor (headerPadding: number = rem(4)) {
@@ -78,21 +77,41 @@ export default class SiteNav {
   }
 
   get open (): boolean {
-    return this.#open
+    return this.#indices.length > 0
   }
 
   set open (value: boolean) {
     if (value !== this.open) {
+this.#indices = [0]
       setExpanded(this.toggle, value)
+
+      if (!value) {
+        let current = this.current
+        while (current != null) {
+          setExpanded(current.toggle, false)
+          this.#indices.pop()
+          current = this.current
+        }
+      }
     }
   }
 
   get closed (): boolean {
-    return !this.#open
+    return !this.open
   }
 
   set closed (value: boolean) {
+if (value === this.open) {
       setExpanded(this.toggle, !value)
+
+      if (value) {
+        let current = this.current
+        while (current != null) {
+          setExpanded(current.toggle, false)
+          this.#indices.pop()
+          current = this.current
+        }
+      }
     }
   }
 
