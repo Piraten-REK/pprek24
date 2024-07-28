@@ -228,6 +228,21 @@ if (value === this.open) {
     }
   }
 
+  private setIndicesByElement (element: HTMLElement, structure: MenuStructure = this.structure, index: number[] = []): boolean {
+    for (let idx = 0, item = structure[0]; idx < structure.length; item = structure[++idx]) {
+      if (item.element === element) {
+        this.#indices = [...index, idx]
+        return true
+      }
+      if (item.type === 'toggle') {
+        if (this.setIndicesByElement(item.element, item.items, [...index, idx])) {
+          return true
+        }
+      }
+    }
+
+    return false
+  }
 
   private * firstLevelElements (list: HTMLUListElement = this.list): Generator<HTMLButtonElement | HTMLAnchorElement, void, unknown> {
     for (const child of Array.from(list.children)) {
