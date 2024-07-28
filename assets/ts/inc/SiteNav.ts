@@ -161,7 +161,7 @@ if (value === this.open) {
         if (state) {
           // close currently open
           const current = this.current
-          if (current != null) {
+          if (this.#indices.length > 1 && current != null) {
             setExpanded(current.toggle, false)
           }
 
