@@ -20,6 +20,7 @@ $colormap: (
   'site-bg': 'txt-50' hsl(32 8% 10%),
   'nav-bg': hsl(32 8% 10% / 95),
   'nav-txt': white,
+  'header-bg': white
 );
 
 @function getColorVar ($theme, $name, $shade) {

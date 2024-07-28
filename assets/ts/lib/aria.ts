@@ -14,11 +14,11 @@ export enum AriaAttributes {
   ARIA_HASPOPUP = 'aria-haspopup'
 }
 
-export function toggleExpanded (element: AnyElement): BoolString {
+export function toggleExpanded (element: AnyElement): boolean {
   const current = element.getAttribute(AriaAttributes.ARIA_EXPANDED) === 'true'
-  const newValue = (!current).toString()
+  const newValue = !current
 
-  element.setAttribute(AriaAttributes.ARIA_EXPANDED, newValue)
+  element.setAttribute(AriaAttributes.ARIA_EXPANDED, newValue.toString())
 
   return newValue
 }

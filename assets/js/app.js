@@ -1,3 +1,40 @@
+function innerWidth(element) {
+    const outerWidth = element.clientWidth;
+    const styles = getComputedStyle(element);
+    const borderInline = [styles.borderInlineStartWidth, styles.borderInlineEndWidth]
+        .reduce((prev, cur) => prev + parseFloat(cur), 0);
+    const paddingInline = [styles.paddingInlineStart, styles.paddingInlineEnd]
+        .reduce((prev, cur) => prev + parseFloat(cur), 0);
+    return outerWidth - borderInline - paddingInline;
+}
+function em(element, value) {
+    const em1 = parseFloat(getComputedStyle(element).fontSize);
+    return value * em1;
+}
+function rem(value) {
+    return em(document.documentElement, value);
+}
+
+var AriaAttributes;
+(function (AriaAttributes) {
+    AriaAttributes["ARIA_CONTROLS"] = "aria-controls";
+    AriaAttributes["ARIA_EXPANDED"] = "aria-expanded";
+    AriaAttributes["ARIA_HASPOPUP"] = "aria-haspopup";
+})(AriaAttributes || (AriaAttributes = {}));
+function toggleExpanded(element) {
+    const current = element.getAttribute(AriaAttributes.ARIA_EXPANDED) === 'true';
+    const newValue = !current;
+    element.setAttribute(AriaAttributes.ARIA_EXPANDED, newValue.toString());
+    return newValue;
+}
+function setExpanded(element, value) {
+    element.setAttribute(AriaAttributes.ARIA_EXPANDED, value.toString());
+}
+
+function use(it, callback) {
+    return callback(it);
+}
+
 /**
  * Returns the owner document of a given element.
  * 
@@ -32,59 +69,6 @@ try {
   }
 } catch (e) {
   /* */
-}
-
-/**
- * An `addEventListener` ponyfill, supports the `once` option
- * 
- * @param node the element
- * @param eventName the event name
- * @param handle the handler
- * @param options event options
- */
-function addEventListener(node, eventName, handler, options) {
-  if (options && typeof options !== 'boolean' && !onceSupported) {
-    var once = options.once,
-        capture = options.capture;
-    var wrappedHandler = handler;
-
-    if (!onceSupported && once) {
-      wrappedHandler = handler.__once || function onceHandler(event) {
-        this.removeEventListener(eventName, onceHandler, capture);
-        handler.call(this, event);
-      };
-
-      handler.__once = wrappedHandler;
-    }
-
-    node.addEventListener(eventName, wrappedHandler, optionsSupported ? options : capture);
-  }
-
-  node.addEventListener(eventName, handler, options);
-}
-
-/**
- * A `removeEventListener` ponyfill
- * 
- * @param node the element
- * @param eventName the event name
- * @param handle the handler
- * @param options event options
- */
-function removeEventListener(node, eventName, handler, options) {
-  var capture = options && typeof options !== 'boolean' ? options.capture : options;
-  node.removeEventListener(eventName, handler, capture);
-
-  if (handler.__once) {
-    node.removeEventListener(eventName, handler.__once, capture);
-  }
-}
-
-function listen(node, eventName, handler, options) {
-  addEventListener(node, eventName, handler, options);
-  return function () {
-    removeEventListener(node, eventName, handler, options);
-  };
 }
 
 /* https://github.com/component/raf */
@@ -127,220 +111,340 @@ Function.prototype.bind.call(Function.prototype.call, [].slice);
 
 function handleOutsideClick(element, eventHandler) {
     const doc = ownerDocument(element);
-    return listen(doc, 'click', eventHandler, true);
+    doc.addEventListener('click', eventHandler, true);
+    return () => removeEventListener('click', eventHandler);
 }
 
-var AriaAttributes;
-(function (AriaAttributes) {
-    AriaAttributes["ARIA_CONTROLS"] = "aria-controls";
-    AriaAttributes["ARIA_EXPANDED"] = "aria-expanded";
-    AriaAttributes["ARIA_HASPOPUP"] = "aria-haspopup";
-})(AriaAttributes || (AriaAttributes = {}));
-function toggleExpanded(element) {
-    const current = element.getAttribute(AriaAttributes.ARIA_EXPANDED) === 'true';
-    const newValue = (!current).toString();
-    element.setAttribute(AriaAttributes.ARIA_EXPANDED, newValue);
-    return newValue;
-}
-function getExpanded(element) {
-    return element.getAttribute(AriaAttributes.ARIA_EXPANDED) === 'true';
-}
-function setExpanded(element, value) {
-    element.setAttribute(AriaAttributes.ARIA_EXPANDED, value.toString());
-}
-
-function getNearestFocusable(element, tags = ['li', '*'], depth = 0, arr = []) {
-    if (depth >= tags.length) {
-        return arr;
-    }
-    for (let idx = 0, child = element.children[0]; idx < element.children.length; child = element.children[++idx]) {
-        if (tags[depth] === '*' || child.tagName.toLowerCase() === tags[depth].toLowerCase()) {
-            if (depth === tags.length - 1) {
-                if (child.getAttribute('tabindex') === '-1') {
-                    arr.push(child);
-                }
-            }
-            getNearestFocusable(child, tags, depth + 1, arr);
-        }
-    }
-    return arr;
-}
-function setUpMenuStructure(menu, toggle) {
-    const structure = [];
-    for (const item of getNearestFocusable(menu)) {
-        const hasPopup = item.getAttribute(AriaAttributes.ARIA_HASPOPUP);
-        if (hasPopup != null && hasPopup !== 'false') {
-            const controls = item.getAttribute(AriaAttributes.ARIA_CONTROLS);
-            if (controls == null) {
-                throw new Error();
-            }
-            const subMenu = menu.querySelector(`#${controls}`);
-            if (subMenu == null) {
-                throw new Error();
-            }
-            structure.push({
-                type: 'toggle',
-                element: item,
-                list: subMenu,
-                items: setUpMenuStructure(subMenu, item)
-            });
-        }
-        else {
-            structure.push({
-                type: 'item',
-                element: item,
-                list: menu,
-                toggle
-            });
-        }
-    }
-    return structure;
-}
-function getStructureAt(structure, indices) {
-    const _indices = Array.from(indices);
-    const index = _indices.shift();
-    const subStructure = structure.at(index);
-    if (_indices.length > 0) {
-        return getStructureAt(subStructure.items, _indices);
-    }
-    else {
-        return structure;
-    }
-}
-function setClickHandlers(structure, currentIndex, depth = 0) {
-    for (let idx = 0, entry = structure[0]; idx < structure.length; entry = structure[++idx]) {
-        if (entry.type === 'item') {
-            continue;
-        }
-        entry.element.addEventListener('click', () => {
-            const state = toggleExpanded(entry.element);
-            currentIndex[depth] = idx;
-            if (state === 'true') {
-                entry.items[0].element.focus();
-                currentIndex[depth + 1] = 0;
-            }
-            else {
-                entry.element.focus();
+class SiteNav {
+    headerPadding;
+    header = document.querySelector('body > .site-header');
+    siteTitle = document.querySelector('body > .site-header > .site-title');
+    toggle = document.querySelector('body > .site-header > .site-nav-toggle');
+    nav = document.querySelector('body > .site-header > .site-nav');
+    list = document.querySelector('body > .site-header > .site-nav > ul');
+    structure = this.getStructure();
+    navWidth = this.nav.clientWidth;
+    #mobile = false;
+    #indices = [];
+    constructor(headerPadding = rem(4)) {
+        this.headerPadding = headerPadding;
+        window.addEventListener('resize', this.navWatcher());
+        this.toggle.addEventListener('click', () => {
+            const state = this.toggleOpen();
+            if (state) {
+                this.structure[0].element.focus();
             }
         });
-        setClickHandlers(entry.items, currentIndex, depth + 1);
+        this.addClickListeners();
+        this.list.addEventListener('keydown', this.keyboardListener.bind(this));
     }
-}
-function setUpMenu(menu, toggle) {
-    const structure = setUpMenuStructure(menu, toggle);
-    const currentIndex = [];
-    toggle.addEventListener('click', () => {
-        const state = toggleExpanded(toggle);
-        if (state === 'true') {
-            structure[0].element.focus();
-            currentIndex[0] = 0;
+    get mobile() {
+        return this.#mobile;
+    }
+    set mobile(value) {
+        if (value !== this.#mobile) {
+            this.#mobile = value;
+            document.body.setAttribute('data-mobile-nav', value.toString());
+            for (const elem of this.firstLevelElements()) {
+                if (value) {
+                    elem.setAttribute('tabindex', '-1');
+                }
+                else {
+                    elem.removeAttribute('tabindex');
+                }
+            }
         }
-        else {
-            toggle.focus();
-            delete currentIndex[0];
+    }
+    get open() {
+        return this.#indices.length > 0;
+    }
+    set open(value) {
+        if (value !== this.open) {
+            this.#indices = [0];
+            setExpanded(this.toggle, value);
+            if (!value) {
+                let current = this.current;
+                while (current != null) {
+                    setExpanded(current.toggle, false);
+                    this.#indices.pop();
+                    current = this.current;
+                }
+            }
         }
-    });
-    setClickHandlers(structure, currentIndex);
-    menu.addEventListener('keydown', event => {
-        const current = getStructureAt(structure, currentIndex);
-        if ((event.key === 'Tab' && !event.shiftKey) || event.key === 'ArrowDown') {
-            event.preventDefault();
-            const newIndex = (currentIndex.at(-1) + 1) % current.length;
-            current[newIndex].element.focus();
-            currentIndex[currentIndex.length - 1] = newIndex;
+    }
+    get closed() {
+        return !this.open;
+    }
+    set closed(value) {
+        if (value === this.open) {
+            setExpanded(this.toggle, !value);
+            if (value) {
+                let current = this.current;
+                while (current != null) {
+                    setExpanded(current.toggle, false);
+                    this.#indices.pop();
+                    current = this.current;
+                }
+            }
         }
-        else if ((event.key === 'Tab' && event.shiftKey) || event.key === 'ArrowUp') {
-            event.preventDefault();
-            const newIndex = (currentIndex.at(-1) + current.length - 1) % current.length;
-            current[newIndex].element.focus();
-            currentIndex[currentIndex.length - 1] = newIndex;
+    }
+    get indices() {
+        return [...this.#indices];
+    }
+    get current() {
+        if (this.#indices.length === 0) {
+            return undefined;
+        }
+        let structure = this.structure;
+        const idx = this.indices;
+        const lastIndex = idx.pop();
+        while (idx.length > 0) {
+            structure = structure[idx.shift()].items;
+        }
+        return structure[lastIndex];
+    }
+    toggleOpen() {
+        this.open = this.closed;
+        return this.open;
+    }
+    navWatcher() {
+        const headerWidth = innerWidth(this.header);
+        const titleWidth = this.siteTitle.clientWidth;
+        const delta = headerWidth - titleWidth - this.headerPadding;
+        this.mobile = this.navWidth > delta;
+        return this.navWatcher.bind(this);
+    }
+    addClickListeners(structure = this.structure, index = []) {
+        for (let idx = 0, item = structure[0]; idx < structure.length; item = structure[++idx]) {
+            if (item.type === 'item') {
+                continue;
+            }
+            item.element.addEventListener('click', () => {
+                const state = toggleExpanded(item.element);
+                if (state) {
+                    const current = this.current;
+                    if (this.#indices.length > 1 && current != null) {
+                        setExpanded(current.toggle, false);
+                    }
+                    item.items[0].element.focus();
+                    this.#indices = [...index, idx, 0];
+                }
+                else {
+                    item.element.focus();
+                    this.#indices = [...index, idx];
+                }
+            });
+            this.addClickListeners(item.items, [...index, idx]);
+        }
+        handleOutsideClick(this.list, event => {
+            if (this.closed) {
+                return;
+            }
+            let node = event.target;
+            while (node != null && node.nodeType !== Node.DOCUMENT_NODE) {
+                if (node === this.list || node === this.toggle) {
+                    return;
+                }
+                node = node.parentElement;
+            }
+            this.closed = true;
+        });
+    }
+    keyboardListener(event) {
+        if (this.indices.length === 0) {
+            this.setIndicesByElement(event.target);
+        }
+        if (event.key === 'Tab' && !event.shiftKey) {
+            if (this.indices.length === 1) {
+                if (this.mobile) {
+                    event.preventDefault();
+                    this.incrementIndex();
+                    this.current?.element?.focus();
+                }
+                else {
+                    if (this.indices[0] === this.structure.length - 1) {
+                        this.closed = true;
+                    }
+                    else {
+                        this.incrementIndex(false);
+                    }
+                }
+            }
+            else {
+                event.preventDefault();
+                this.incrementIndex();
+                this.current?.element?.focus();
+            }
+        }
+        else if (event.key === 'Tab' && event.shiftKey) {
+            if (this.indices.length === 1) {
+                if (this.mobile) {
+                    event.preventDefault();
+                    this.decrementIndex();
+                    this.current?.element?.focus();
+                }
+                else {
+                    if (this.indices[0] === 0) {
+                        this.closed = true;
+                    }
+                    else {
+                        this.decrementIndex(false);
+                    }
+                }
+            }
+            else {
+                event.preventDefault();
+                this.decrementIndex();
+                this.current?.element?.focus();
+            }
         }
         else if (event.key === 'Enter' || event.code === 'Space') {
-            const currentItem = current[currentIndex.at(-1)];
-            if (currentItem.type === 'toggle') {
+            if (this.current?.type === 'toggle') {
                 event.preventDefault();
-                setExpanded(currentItem.element, true);
-                currentItem.items[0].element.focus();
-                currentIndex.push(0);
+                setExpanded(this.current.element, true);
+                this.current.items[0].element.focus();
+                this.#indices.push(0);
             }
         }
         else if (event.key === 'Escape') {
+            if (!this.mobile && this.#indices.length === 1) {
+                return;
+            }
+            setExpanded(this.current?.toggle, false);
+            this.current?.toggle?.focus();
+            this.#indices.pop();
+        }
+        else if (event.key === 'ArrowUp') {
+            if (!this.mobile && this.#indices.length === 1) {
+                return;
+            }
             event.preventDefault();
-            if (currentIndex.length === 1) {
-                toggle.focus();
-                setExpanded(toggle, false);
-                delete currentIndex[0];
+            this.decrementIndex();
+            this.current?.element?.focus();
+        }
+        else if (event.key === 'ArrowDown') {
+            if (!this.mobile && this.#indices.length === 1) {
+                if (this.current?.type === 'toggle') {
+                    event.preventDefault();
+                    setExpanded(this.current.element, true);
+                    this.current.items[0].element.focus();
+                    this.#indices.push(0);
+                }
+                return;
             }
-            else {
-                const parentStructure = getStructureAt(structure, currentIndex.slice(0, -1));
-                const parent = parentStructure[currentIndex.at(-2)];
-                parent.element.focus();
-                setExpanded(parent.element, false);
-                currentIndex.pop();
-            }
+            event.preventDefault();
+            this.incrementIndex();
+            this.current?.element?.focus();
         }
         else if (event.key === 'ArrowRight') {
             event.preventDefault();
-            const currentItem = current[currentIndex.at(-1)];
-            if (currentItem.type === 'toggle') {
-                setExpanded(currentItem.element, true);
-                currentItem.items[0].element.focus();
-                currentIndex.push(0);
+            if (this.current?.type !== 'toggle') {
+                return;
             }
+            else if (!this.mobile && this.indices.length === 1) {
+                this.incrementIndex();
+                this.current?.element?.focus();
+                return;
+            }
+            setExpanded(this.current.element, true);
+            this.current.items[0].element.focus();
+            this.#indices.push(0);
         }
         else if (event.key === 'ArrowLeft') {
             event.preventDefault();
-            if (currentIndex.length > 1) {
-                const parentStructure = getStructureAt(structure, currentIndex.slice(0, -1));
-                const parent = parentStructure[currentIndex.at(-2)];
-                parent.element.focus();
-                setExpanded(parent.element, false);
-                currentIndex.pop();
+            if (!this.mobile && this.indices.length === 1) {
+                this.decrementIndex();
+                this.current?.element?.focus();
+                return;
+            }
+            setExpanded(this.current?.toggle, false);
+            this.current?.toggle?.focus();
+            this.#indices.pop();
+        }
+    }
+    incrementIndex(overflow = true) {
+        if (overflow) {
+            let structure = this.structure;
+            const idx = this.indices.slice(0, -1);
+            while (idx.length > 0) {
+                structure = structure[idx.shift()].items;
+            }
+            this.#indices[this.#indices.length - 1] = (this.#indices[this.#indices.length - 1] + structure.length + 1) % structure.length;
+        }
+        else {
+            this.#indices[this.#indices.length - 1]++;
+        }
+    }
+    decrementIndex(overflow = true) {
+        if (overflow) {
+            let structure = this.structure;
+            const idx = this.indices.slice(0, -1);
+            while (idx.length > 0) {
+                structure = structure[idx.shift()].items;
+            }
+            this.#indices[this.#indices.length - 1] = (this.#indices[this.#indices.length - 1] + structure.length - 1) % structure.length;
+        }
+        else {
+            this.#indices[this.#indices.length - 1]--;
+        }
+    }
+    setIndicesByElement(element, structure = this.structure, index = []) {
+        for (let idx = 0, item = structure[0]; idx < structure.length; item = structure[++idx]) {
+            if (item.element === element) {
+                this.#indices = [...index, idx];
+                return true;
+            }
+            if (item.type === 'toggle') {
+                if (this.setIndicesByElement(item.element, item.items, [...index, idx])) {
+                    return true;
+                }
             }
         }
-    });
-    return {
-        open() {
-            setExpanded(toggle, true);
-            structure[0].element.focus();
-            currentIndex.splice(0, currentIndex.length, 0);
-        },
-        close() {
-            setExpanded(toggle, false);
-            toggle.focus();
-            currentIndex.splice(0, currentIndex.length);
-        },
-        toggle() {
-            const state = toggleExpanded(toggle);
-            if (state === 'true') {
-                structure[0].element.focus();
-                currentIndex.splice(0, currentIndex.length, 0);
+        return false;
+    }
+    *firstLevelElements(list = this.list) {
+        for (const child of Array.from(list.children)) {
+            for (const grandchild of Array.from(child.children)) {
+                if (grandchild instanceof HTMLAnchorElement || grandchild instanceof HTMLButtonElement) {
+                    yield grandchild;
+                }
+            }
+        }
+    }
+    getStructure(list = this.list, toggle = this.toggle) {
+        const structure = [];
+        for (const item of this.firstLevelElements(list)) {
+            const hasPopup = use(item.getAttribute(AriaAttributes.ARIA_HASPOPUP), it => it != null && it !== 'false');
+            if (hasPopup) {
+                const controls = item.getAttribute(AriaAttributes.ARIA_CONTROLS);
+                if (controls == null) {
+                    throw new ReferenceError(`${AriaAttributes.ARIA_CONTROLS} unset`);
+                }
+                const subMenu = list.querySelector(`#${controls}`);
+                if (subMenu == null) {
+                    throw new ReferenceError(`${AriaAttributes.ARIA_CONTROLS} "${controls}" invalid`);
+                }
+                structure.push({
+                    type: 'toggle',
+                    element: item,
+                    list: subMenu,
+                    toggle,
+                    items: this.getStructure(subMenu, item)
+                });
             }
             else {
-                toggle.focus();
-                currentIndex.splice(0, currentIndex.length);
+                structure.push({
+                    type: 'item',
+                    element: item,
+                    list,
+                    toggle
+                });
             }
-        },
-        get status() {
-            return getExpanded(toggle);
         }
-    };
+        return Object.freeze(structure);
+    }
 }
 
-const siteNavList = document.querySelector('.site-nav ul');
-const siteNavToggle = document.querySelector('.site-nav-toggle');
-const siteNav = setUpMenu(siteNavList, siteNavToggle);
-handleOutsideClick(siteNavList, event => {
-    if (!siteNav.status) {
-        return;
-    }
-    let node = event.target;
-    while (node != null && node.nodeType !== Node.DOCUMENT_NODE) {
-        if (node === siteNavList || node === siteNavToggle) {
-            return;
-        }
-        node = node.parentElement ?? null;
-    }
-    siteNav.close();
-});
+const siteNav = new SiteNav();
+console.log(siteNav);
 //# sourceMappingURL=app.js.map
