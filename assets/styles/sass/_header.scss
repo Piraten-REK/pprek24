@@ -1,22 +1,25 @@
 @use 'mixins';
 @use 'sass:map';
 @use 'sass:list';
+@use 'util';
 
 .site-header {
   --_anim_time_1: .25s;
   --_anim_time_2: .2s;
 
+  --_border-width: .125em;
+  --_border-color: var(--clr-light-txt-100);
   --_padding-block: calc(var(--site-padding-inline) * 2 / 3);
   inline-size: 100%;
   block-size: var(--header-block-size);
-  background: white;
+  background-color: var(--clr-header-bg);
   padding: 0 var(--outer-padding-inline);
   position: relative;
   isolation: isolate;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 0px var(--clr-light-txt-100);
+  box-shadow: 0 var(--_border-width) 0px var(--_border-color);
 
   a:not(.btn) {
     color: currentColor;
@@ -138,11 +141,6 @@
 .site-nav {
   $selectors: (&);
 
-  // TODO: ONLY FOR TESTING, REMOVE LATER
-  @include mixins.mobile-nav {
-    display: none;
-  }
-
   li {
     list-style: none;
   }
@@ -154,13 +152,14 @@
 
     & > li {
       $selectors: list.append($selectors, &);
+      --_padding-inline: .5em;
 
       :where(a, button) {
         $selectors: list.append($selectors, &);
 
         display: flex;
         align-items: center;
-        padding-inline: .5em;
+        padding-inline: var(--_padding-inline);
         font-size: 1.2em;
         font-weight: 500;
         letter-spacing: .03em;
@@ -178,11 +177,44 @@
       &:has([aria-current]) > :where(a, button) {
         box-shadow: inset 0 -.2em 0 var(--clr-accent-400);
       }
-    }
-  }
 
-  li ul {
-    display: none;
+      list-style-type: none;
+      position: relative;
+
+      & > ul {
+        opacity: 0;
+        scale: 1 0;
+        transform-origin: center top;
+        position: absolute;
+        inset: var(--header-block-size) auto auto 0;
+        background-color: var(--clr-header-bg);;
+        border: max(calc(var(--_border-width) / 2), 1px) solid var(--_border-color);
+        border-block-start-width: var(--_border-width);
+        min-inline-size: 100%;
+  
+        @media not (prefers-reduced-motion: reduce) {
+          transition:
+            scale var(--_anim_time_1) ease,
+            opacity var(--_anim_time_2) ease;
+        }
+
+        li[role='separator'] {
+          background: var(--_border-color);
+          block-size: max(calc(var(--_border-width) / 2), 1px);
+          margin-inline: var(--_padding-inline);
+        }
+
+        & > li {
+          &:has([aria-current]) > :where(a, button) {
+            box-shadow: inset .2em 0 0 var(--clr-accent-400);
+          }
+
+          & > :where(a, button) {
+            padding-block: .25em;
+          }
+        }
+      }
+    }
   }
 
   button[aria-haspopup='true'] {
@@ -203,7 +235,14 @@
     
     &[aria-expanded='true'] {
       & + ul {
-        display: revert;
+        opacity: 1;
+        scale: 1;
+
+        @media not (prefers-reduced-motion: reduce) {
+          transition:
+            scale var(--_anim_time_1) ease,
+            opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
+        }
       }
 
       &::before {
@@ -211,136 +250,123 @@
       }
     }
   }
-}
 
-// .site-nav {
-//   --_border-radius: .75em;
-//   --_inset-block: calc(var(--site-padding-inline) / 2);
-//   --_inset-inline: calc(var(--outer-padding-inline) - var(--_inset-block));
-//   --_padding-inline: var(--site-padding-inline);
-//   position: absolute;
-//   inset: var(--_inset-block) var(--_inset-inline) auto;
-//   background: var(--clr-nav-bg);
-//   border-radius: .5rem;
-//   padding-block-start: var(--header-block-size);
-//   color: var(--clr-nav-txt);
-//   max-block-size: calc(100vh - var(--_inset) * 2);
-//   overflow: hidden;
-//   scale: 1 0;
-//   opacity: 0;
-//   transform-origin: top center;
-//   backdrop-filter: blur(.25rem);
+  @include mixins.mobile-nav {
+    --_border-radius: .75em;
+    --_inset-block: calc(var(--site-padding-inline) / 2);
+    --_inset-inline: calc(var(--outer-padding-inline) - var(--_inset-block));
+    --_padding-inline: var(--site-padding-inline);
+    position: absolute;
+    inset: var(--_inset-block) var(--_inset-inline) auto;
+    background: var(--clr-nav-bg);
+    border-radius: .5rem;
+    padding-block-start: var(--header-block-size);
+    color: var(--clr-nav-txt);
+    block-size: auto;
+    max-block-size: calc(100vh - var(--_inset-block) * 2);
+    overflow: hidden;
+    scale: 1 0;
+    opacity: 0;
+    transform-origin: top center;
+    backdrop-filter: blur(.25rem);
 
-//   @media not (prefers-reduced-motion: reduce) {
-//     transition:
-//       scale var(--_anim_time_1) ease,
-//       opacity var(--_anim_time_2) ease;
-//   }
+    @media not (prefers-reduced-motion: reduce) {
+      transition:
+        scale var(--_anim_time_1) ease,
+        opacity var(--_anim_time_2) ease;
+    }
 
-//   @at-root .site-nav-toggle[aria-expanded='true'] + & {
-//     scale: 1;
-//     opacity: 1;
-
-//     @media not (prefers-reduced-motion: reduce) {
-//       transition:
-//         scale var(--_anim_time_1) ease,
-//         opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
-//     }
-//   }
-
-//   li {
-//     list-style: none;
-//     position: relative;
-
-//     %current-marker {
-//       text-decoration: underline solid var(--clr-dark-accent-400) .2em;
-//       text-underline-offset: .35em;
-//     }
-//     %current-marker-hover {
-//       text-decoration-color: #fff;
-//     }
-
-//     [role='separator'] {
-//       padding-block: .5em;
-//       padding-inline-end: var(--_padding-inline);
-//       color: var(--clr-dark-txt-200);
-
-//       &::before {
-//         content: '';
-//         display: block;
-//         inline-size: 100%;
-//         block-size: .05em;
-//         background-color: currentColor;
-//         border-radius: 100vmax;
-//       }
-//     }
-
-//     &:has([aria-current]) {
-//       & > a {
-//         @extend %current-marker;
-
-//       &:where(:hover, :focus-visible) {
-//         @extend %current-marker-hover;
-//       }
-//       }
-//       & > button {
-//         $_parent: &;
-        
-//         span {
-//           @extend %current-marker;
+    $_parent_list: list.nth(&, 1);
+    @at-root #{util.list-slice($_parent_list, 1, -1)} .site-nav-toggle[aria-expanded='true'] + #{list.nth($_parent_list, -1)} {
+      scale: 1;
+      opacity: 1;
   
-//           @at-root #{$_parent}:where(:hover, :focus-visible) #{list.nth(list.nth(&, 1), -1)} {
-//             @extend %current-marker-hover;
-//           }
-//         }
-//       }
-//     }
+      @media not (prefers-reduced-motion: reduce) {
+        transition:
+          scale var(--_anim_time_1) ease,
+          opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
+      }
+    }
 
-//     & > :where(a, button) {
-//       display: block;
-//       inline-size: 100%;
-//       text-align: start;
-//       padding: calc(var(--_padding-block) / 3 * 2) var(--_padding-inline);
+    li {
+      position: relative;
 
-//       &:where(:hover, :focus-visible) {
-//         background: var(--clr-light-accent-200);
-//         outline: none;
-//       }
-//     }
+      %current-marker {
+        text-decoration: underline solid var(--clr-dark-accent-400) .2em;
+        text-underline-offset: .35em;
+      }
+      %current-marker-hover {
+        text-decoration-color: #fff;
+      }
 
-//     & > button[aria-haspopup='true'] {
-//       @extend .bi;
-//       display: flex;
-//       align-items: center;
-//       justify-content: flex-end;
-//       column-gap: 1ch;
-//       flex-direction: row-reverse;
+      &[role='separator'] {
 
-//       &::before {
-//         content: map.get($bootstrap-icons-map, 'chevron-down');
-//         transition: rotate .25s ease;
-//       }
+      }
+
+      &:has([aria-current]) {
+        & > a {
+          box-shadow: none;
+          @extend %current-marker;
+        }
+
+        &:where(:hover, :focus-visible) > a {
+          @extend %current-marker-hover;
+        }
+
+        & > button {
+          $_parent: &;
+
+          span {
+            @extend %current-marker;
+
+            @at-root #{$_parent}:where(:hover, :focus-visible) #{list.nth(list.nth(&, 1), -1)} {
+              @extend %current-marker-hover;
+            }
+          }
+        }
+      }
       
-//       &[aria-expanded='true']::before {
-//         rotate: -180deg;
-//       }
-//     }
+      & > :where(a, button) {
+        inline-size: 100%;
+        text-align: start;
+        padding: calc(var(--_padding-block) / 3 * 2) var(--_padding-inline);
 
-//     $_parent: &;
+        &:where(:hover, :focus-visible) {
+          background: var(--clr-light-accent-200);
+          outline: none;
+        }
+      }
+    }
 
-//     ul {
-//       overflow: hidden;
-//       display: none;
+    & > ul {
+      flex-direction: column;
+      block-size: revert;
+      
+      & > li  {
+        $_parent: &;
+        
+        ul {
+          position: static;
+          background-color: transparent;
+          border: 0 none transparent;
+          overflow: hidden;
+          display: none;
 
-//       & > li > :where(a, button),
-//       & > li[role="separator"] {
-//         padding-inline-start: calc(var(--_padding-inline) + 1.2rem);
-//       }
+          @at-root #{$_parent} > button[aria-expanded='true'] + #{list.nth(list.nth(&, 1), -1)} {
+            display: block;
+          }
 
-//       @at-root #{$_parent} > button[aria-expanded='true'] + #{list.nth(list.nth(&, 1), -1)} {
-//         display: revert;
-//       }
-//     }
-//   }
-// }
+          & > li {
+            :where(a, button) {
+              padding-inline-start: calc(var(--_padding-inline) + 1.2rem);
+            }
 
+            &:where([role='separator']) {
+              margin-inline-start: calc(var(--_padding-inline) + 1.2rem);
+            }
+          }
+        }
+      }
+    }
+  }
+}
