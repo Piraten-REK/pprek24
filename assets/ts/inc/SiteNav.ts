@@ -55,7 +55,7 @@ export default class SiteNav {
 
     window.addEventListener('resize', this.navWatcher())
 
-this.toggle.addEventListener('click', () => {
+    this.toggle.addEventListener('click', () => {
       const state = this.toggleOpen()
       if (state) {
         this.structure[0].element.focus()
@@ -90,7 +90,7 @@ this.toggle.addEventListener('click', () => {
 
   set open (value: boolean) {
     if (value !== this.open) {
-this.#indices = [0]
+      this.#indices = [0]
       setExpanded(this.toggle, value)
 
       if (!value) {
@@ -109,7 +109,7 @@ this.#indices = [0]
   }
 
   set closed (value: boolean) {
-if (value === this.open) {
+    if (value === this.open) {
       setExpanded(this.toggle, !value)
 
       if (value) {
@@ -379,8 +379,6 @@ if (value === this.open) {
         }
 
         const subMenu: HTMLUListElement | null = list.querySelector(`#${controls}`)
-
-        console.log(controls, subMenu, list)
 
         if (subMenu == null) {
           throw new ReferenceError(`${AriaAttributes.ARIA_CONTROLS} "${controls}" invalid`)
