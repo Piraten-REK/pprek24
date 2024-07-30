@@ -1,6 +1,5 @@
 import { innerWidth, rem } from '../lib/styles'
 import { AriaAttributes, setExpanded, toggleExpanded } from '../lib/aria'
-import { use } from '../lib/utils'
 import handleOutsideClick from '../lib/handleOutsideClick'
 
 type MutableMenuStructure = Array<
@@ -369,7 +368,7 @@ export default class SiteNav {
     const structure: MutableMenuStructure = []
 
     for (const item of this.firstLevelElements(list)) {
-      const hasPopup = use(item.getAttribute(AriaAttributes.ARIA_HASPOPUP), it => it != null && it !== 'false')
+      const hasPopup = item.getAttribute(AriaAttributes.ARIA_EXPANDED) != null
 
       if (hasPopup) {
         const controls = item.getAttribute(AriaAttributes.ARIA_CONTROLS)

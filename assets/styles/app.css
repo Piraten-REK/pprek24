@@ -9,7 +9,7 @@
   font-family: "bootstrap-icons";
   src: url("/assets/fonts/bootstrap-icons.woff2?24e3eb84d0bcaf83d77f904c78ac1f47") format("woff2"), url("/assets/fonts/bootstrap-icons.woff?24e3eb84d0bcaf83d77f904c78ac1f47") format("woff");
 }
-.bi::before, .site-nav button[aria-haspopup=true]::before,
+.bi::before, .site-nav button[aria-expanded]::before,
 [class^=bi-]::before,
 [class*=" bi-"]::before {
   display: inline-block;
@@ -8653,31 +8653,31 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
 .site-nav > ul > li > ul > li > :where(a, button) {
   padding-block: 0.25em;
 }
-.site-nav button[aria-haspopup=true] {
+.site-nav button[aria-expanded] {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   column-gap: 1ch;
   flex-direction: row-reverse;
 }
-.site-nav button[aria-haspopup=true]::before {
+.site-nav button[aria-expanded]::before {
   content: "\f282";
 }
 @media not (prefers-reduced-motion: reduce) {
-  .site-nav button[aria-haspopup=true]::before {
+  .site-nav button[aria-expanded]::before {
     transition: rotate 0.25s ease;
   }
 }
-.site-nav button[aria-haspopup=true][aria-expanded=true] + ul {
+.site-nav button[aria-expanded][aria-expanded=true] + ul {
   opacity: 1;
   scale: 1;
 }
 @media not (prefers-reduced-motion: reduce) {
-  .site-nav button[aria-haspopup=true][aria-expanded=true] + ul {
+  .site-nav button[aria-expanded][aria-expanded=true] + ul {
     transition: scale var(--_anim_time_1) ease, opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
   }
 }
-.site-nav button[aria-haspopup=true][aria-expanded=true]::before {
+.site-nav button[aria-expanded][aria-expanded=true]::before {
   rotate: -180deg;
 }
 body[data-mobile-nav=true] .site-nav {

@@ -217,7 +217,7 @@
     }
   }
 
-  button[aria-haspopup='true'] {
+  button[aria-expanded] {
     @extend .bi;
     display: flex;
     align-items: center;
