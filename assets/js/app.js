@@ -31,10 +31,6 @@ function setExpanded(element, value) {
     element.setAttribute(AriaAttributes.ARIA_EXPANDED, value.toString());
 }
 
-function use(it, callback) {
-    return callback(it);
-}
-
 /**
  * Returns the owner document of a given element.
  * 
@@ -414,7 +410,7 @@ class SiteNav {
     getStructure(list = this.list, toggle = this.toggle) {
         const structure = [];
         for (const item of this.firstLevelElements(list)) {
-            const hasPopup = use(item.getAttribute(AriaAttributes.ARIA_HASPOPUP), it => it != null && it !== 'false');
+            const hasPopup = item.getAttribute(AriaAttributes.ARIA_EXPANDED) != null;
             if (hasPopup) {
                 const controls = item.getAttribute(AriaAttributes.ARIA_CONTROLS);
                 if (controls == null) {
@@ -445,6 +441,5 @@ class SiteNav {
     }
 }
 
-const siteNav = new SiteNav();
-console.log(siteNav);
+new SiteNav();
 //# sourceMappingURL=app.js.map
