@@ -198,10 +198,13 @@
             opacity var(--_anim_time_2) ease;
         }
 
-        li[role='separator'] {
-          background: var(--_border-color);
-          block-size: max(calc(var(--_border-width) / 2), 1px);
-          margin-inline: var(--_padding-inline);
+        li:has(> hr) {
+          padding-inline: var(--_padding-inline);
+
+          & > hr {
+            border: none;
+            border-block-start: max(calc(var(--_border-width) / 2), 1px) solid var(--_border-color);
+          }
         }
 
         & > li {
@@ -297,10 +300,6 @@
       }
       %current-marker-hover {
         text-decoration-color: #fff;
-      }
-
-      &[role='separator'] {
-
       }
 
       &:has([aria-current]) {
