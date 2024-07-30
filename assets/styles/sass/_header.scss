@@ -349,10 +349,29 @@
           background-color: transparent;
           border: 0 none transparent;
           overflow: hidden;
-          display: none;
+          block-size: 0;
+          transition: none;
+
+          @supports (block-size: calc-size(auto)) {  // progressive enhancement
+            @media not (prefers-reduced-motion: reduce) {
+              transition:
+                block-size var(--_anim_time_1) ease,
+                opacity var(--_anim_time_2) ease;
+            }
+          }
 
           @at-root #{$_parent} > button[aria-expanded='true'] + #{list.nth(list.nth(&, 1), -1)} {
-            display: block;
+            block-size: auto;
+            block-size: calc-size(auto);  // progressive enhancement
+            transition: none;
+
+            @supports (block-size: calc-size(auto)) {  // progressive enhancement
+              @media not (prefers-reduced-motion: reduce) {
+                transition:
+                  block-size var(--_anim_time_1) ease,
+                  opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
+              }
+            }
           }
 
           & > li {

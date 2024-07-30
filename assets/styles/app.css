@@ -8747,10 +8747,27 @@ body[data-mobile-nav=true] .site-nav > ul > li ul {
   background-color: transparent;
   border: 0 none transparent;
   overflow: hidden;
-  display: none;
+  block-size: 0;
+  transition: none;
+}
+@supports (block-size: calc-size(auto)) {
+  @media not (prefers-reduced-motion: reduce) {
+    body[data-mobile-nav=true] .site-nav > ul > li ul {
+      transition: block-size var(--_anim_time_1) ease, opacity var(--_anim_time_2) ease;
+    }
+  }
 }
 body[data-mobile-nav=true] .site-nav > ul > li > button[aria-expanded=true] + ul {
-  display: block;
+  block-size: auto;
+  block-size: calc-size(auto);
+  transition: none;
+}
+@supports (block-size: calc-size(auto)) {
+  @media not (prefers-reduced-motion: reduce) {
+    body[data-mobile-nav=true] .site-nav > ul > li > button[aria-expanded=true] + ul {
+      transition: block-size var(--_anim_time_1) ease, opacity var(--_anim_time_2) ease calc(var(--_anim_time_1) - var(--_anim_time_2));
+    }
+  }
 }
 
 body[data-mobile-nav=true] .site-nav > ul > li ul > li :where(a, button) {
