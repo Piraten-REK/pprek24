@@ -8642,10 +8642,12 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
     transition: scale var(--_anim_time_1) ease, opacity var(--_anim_time_2) ease;
   }
 }
-.site-nav > ul > li > ul li[role=separator] {
-  background: var(--_border-color);
-  block-size: max(var(--_border-width) / 2, 1px);
-  margin-inline: var(--_padding-inline);
+.site-nav > ul > li > ul li:has(> hr) {
+  padding-inline: var(--_padding-inline);
+}
+.site-nav > ul > li > ul li:has(> hr) > hr {
+  border: none;
+  border-block-start: max(var(--_border-width) / 2, 1px) solid var(--_border-color);
 }
 .site-nav > ul > li > ul > li:has([aria-current]) > :where(a, button) {
   box-shadow: inset 0.2em 0 0 var(--clr-accent-400);
