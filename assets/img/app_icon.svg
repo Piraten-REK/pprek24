@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="630"
+   height="630"
+   viewBox="0 0 630 630"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
+   sodipodi:docname="app_icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="0.81666667"
+     inkscape:cx="354.48979"
+     inkscape:cy="334.89796"
+     inkscape:window-width="2560"
+     inkscape:window-height="1371"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1-3" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#ff8800;stop-opacity:1;"
+         offset="0"
+         id="stop2" />
+      <stop
+         style="stop-color:#ca4802;stop-opacity:1;"
+         offset="1"
+         id="stop3" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2"
+       id="radialGradient3"
+       cx="111.02416"
+       cy="-100.19975"
+       fx="111.02416"
+       fy="-100.19975"
+       r="600"
+       gradientTransform="matrix(0.90025525,0.75809917,-0.62073884,2.6744221,-103.86028,280.82924)"
+       gradientUnits="userSpaceOnUse" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter76"
+       x="-0.093052321"
+       y="-0.092866517"
+       width="1.1861046"
+       height="1.185733">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="12.810753"
+         id="feGaussianBlur76" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:url(#radialGradient3);stroke:none;stroke-width:0.711351"
+       id="rect1"
+       width="630"
+       height="630"
+       x="0"
+       y="0" />
+    <g
+       inkscape:label="Layer 1"
+       inkscape:groupmode="layer"
+       id="layer1-3"
+       transform="translate(222.69838,169.02997)">
+      <g
+         id="g76"
+         inkscape:label="shadow"
+         style="opacity:0.3;mix-blend-mode:normal;fill:#000000;fill-opacity:1;filter:url(#filter76)"
+         transform="matrix(1.5284021,0,0,1.5284021,-10.878826,-77.130844)">
+        <path
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.19838;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+           id="path28"
+           sodipodi:type="arc"
+           sodipodi:cx="125.48447"
+           sodipodi:cy="179.18025"
+           sodipodi:rx="112.44789"
+           sodipodi:ry="112.44792"
+           sodipodi:start="0"
+           sodipodi:end="6.2592219"
+           sodipodi:open="true"
+           d="M 237.93236,179.18025 A 112.44789,112.44792 0 0 1 126.15812,291.62616 112.44789,112.44792 0 0 1 13.044647,180.52754 112.44789,112.44792 0 0 1 123.4636,66.750491 112.44789,112.44792 0 0 1 237.90007,176.48587"
+           inkscape:export-filename="C:\Users\Elle\Documents\BimBam\BSBG\PIR_REK\Logos_einzeln\aperture_bbgg_offen.png"
+           inkscape:export-xdpi="149"
+           inkscape:export-ydpi="149"
+           sodipodi:arc-type="arc"
+           transform="matrix(1.469188,0,0,1.4721271,-116.85157,-117.80608)" />
+      </g>
+      <g
+         id="g3"
+         transform="matrix(2.2455101,0,0,2.2500021,-189.47502,-257.18591)"
+         inkscape:label="logo">
+        <path
+           style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.19838;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+           id="path5159"
+           sodipodi:type="arc"
+           sodipodi:cx="125.48447"
+           sodipodi:cy="179.18025"
+           sodipodi:rx="112.44789"
+           sodipodi:ry="112.44792"
+           sodipodi:start="0"
+           sodipodi:end="6.2592219"
+           sodipodi:open="true"
+           d="M 237.93236,179.18025 A 112.44789,112.44792 0 0 1 126.15812,291.62616 112.44789,112.44792 0 0 1 13.044647,180.52754 112.44789,112.44792 0 0 1 123.4636,66.750491 112.44789,112.44792 0 0 1 237.90007,176.48587"
+           inkscape:export-filename="C:\Users\Elle\Documents\BimBam\BSBG\PIR_REK\Logos_einzeln\aperture_bbgg_offen.png"
+           inkscape:export-xdpi="149"
+           inkscape:export-ydpi="149"
+           sodipodi:arc-type="arc" />
+        <g
+           id="g946-3"
+           transform="matrix(0.2645833,0,0,0.26341143,59.55523,29.04988)"
+           inkscape:export-filename="C:\Users\Elle\Documents\BimBam\BSBG\PIR_REK\Logos_einzeln\aperture_bbgg_offen.png"
+           inkscape:export-xdpi="149"
+           inkscape:export-ydpi="149">
+          <path
+             style="fill:#4cbcd0;fill-opacity:1;stroke:none;stroke-width:3.97633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="m 387.54114,609.70084 c 14.2993,43.22862 54.7075,158.0815 -2.8427,339.01781 -102.4558,33.01428 -186.90846,28.02638 -262.96985,0.71081 C 325.34464,846.404 381.60444,644.74428 387.54114,609.70084 Z"
+             id="path930-8"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cccc" />
+          <path
+             sodipodi:nodetypes="cccc"
+             inkscape:connector-curvature="0"
+             id="path932-0"
+             d="m 370.99044,501.3454 c 40.7717,20.26908 150.7986,72.40448 238.8198,240.63742 -48.6619,96.01626 -111.6473,152.49632 -184.5867,187.30026 70.1313,-217.1528 -33.5188,-399.05516 -54.2331,-427.93768 z"
+             style="fill:#5666a4;fill-opacity:1;stroke:none;stroke-width:3.97633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             style="fill:#1ea12d;fill-opacity:1;stroke:none;stroke-width:3.97633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="m 288.16774,433.86683 c 43.331,-13.9855 158.4739,-53.56023 338.9884,5.3 32.2706,102.6922 26.6708,187.10654 -1.1953,262.96792 -101.547,-204.35751 -302.7936,-262.07734 -337.7931,-268.26792 z"
+             id="path934-4"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cccc" />
+          <path
+             sodipodi:nodetypes="cccc"
+             inkscape:connector-curvature="0"
+             id="path936-1"
+             d="m 180.66494,442.42209 c 21.44297,-40.1669 76.74718,-148.63553 247.4621,-231.74062 94.5646,51.42578 149.1942,116.02251 181.8684,189.94053 -215.0277,-76.39945 -399.85941,21.93198 -429.3305,41.80009 z"
+             style="fill:#8fbd1f;fill-opacity:1;stroke:none;stroke-width:3.97633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             style="fill:#4cbcd0;fill-opacity:1;stroke:none;stroke-width:3.97633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="M 112.06767,528.93104 C 98.159713,485.57493 58.791103,370.36157 117.97434,189.95276 220.72411,157.86567 305.12824,163.61668 380.93964,191.61852 176.40072,292.79956 118.32096,493.94267 112.06767,528.93104 Z"
+             id="path938-3"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cccc" />
+          <path
+             sodipodi:nodetypes="cccc"
+             inkscape:connector-curvature="0"
+             id="path940-4"
+             d="M 126.25929,639.86477 C 85.659813,619.25253 -23.923387,566.19092 -110.52205,397.22148 -61.052137,301.61909 2.407363,245.6723 75.637723,211.48492 3.677003,428.03841 105.78925,610.80852 126.25929,639.86477 Z"
+             style="fill:#5666a4;fill-opacity:1;stroke:none;stroke-width:3.97633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             style="fill:#1ea12d;fill-opacity:1;stroke:none;stroke-width:3.97633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="m 211.17091,707.7556 c -43.23232,14.28821 -158.095497,54.66701 -339.01709,-2.92971 -32.98816,-102.46404 -27.97859,-186.91552 -0.64349,-262.96983 102.973243,203.64257 304.61865,259.95378 339.66058,265.89954 z"
+             id="path942-0"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cccc" />
+          <path
+             sodipodi:nodetypes="cccc"
+             inkscape:connector-curvature="0"
+             id="path944-0"
+             d="m 320.06844,694.79306 c -20.6427,40.58413 -73.78601,150.12766 -242.820027,236.60018 -95.5655,-49.54116 -151.46493,-113.04233 -185.597673,-186.29823 216.49977,72.12232 399.346,-29.85358 428.4177,-50.30195 z"
+             style="fill:#8fbd1f;fill-opacity:1;stroke:none;stroke-width:3.97633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        </g>
+        <path
+           inkscape:export-ydpi="149"
+           inkscape:export-xdpi="149"
+           inkscape:export-filename="C:\Users\Elle\Documents\BimBam\BSBG\PIR_REK\Logos_einzeln\aperture_bbgg_offen.png"
+           d="m -67.563513,-611.81238 a 31.750002,31.609375 0 0 1 -31.559793,31.60881 31.750002,31.609375 0 0 1 -31.937934,-31.23008 31.750002,31.609375 0 0 1 31.177127,-31.983 31.750002,31.609375 0 0 1 32.311484,30.84688"
+           sodipodi:open="true"
+           sodipodi:end="6.2592219"
+           sodipodi:start="0"
+           sodipodi:ry="31.609375"
+           sodipodi:rx="31.750002"
+           sodipodi:cy="-611.81238"
+           sodipodi:cx="-99.313515"
+           sodipodi:type="arc"
+           id="path948-8"
+           style="opacity:1;fill:#ff8700;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.74625;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+           sodipodi:arc-type="arc"
+           transform="matrix(2.5,0,0,2.5,373.76826,1708.7112)" />
+        <path
+           d="m -73.603563,-611.81238 a 25.709951,25.755753 0 0 1 -25.555928,25.75529 25.709951,25.755753 0 0 1 -25.862129,-25.4467 25.709951,25.755753 0 0 1 25.246057,-26.06018 25.709951,25.755753 0 0 1 26.164618,25.13446"
+           sodipodi:open="true"
+           sodipodi:end="6.2592219"
+           sodipodi:start="0"
+           sodipodi:ry="25.755753"
+           sodipodi:rx="25.709951"
+           sodipodi:cy="-611.81238"
+           sodipodi:cx="-99.313515"
+           sodipodi:type="arc"
+           id="path950-1"
+           style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke-width:0.399113;paint-order:normal"
+           inkscape:export-filename="C:\Users\Elle\Documents\BimBam\BSBG\PIR_REK\Logos_einzeln\aperture_bbgg_offen.png"
+           inkscape:export-xdpi="149"
+           inkscape:export-ydpi="149"
+           sodipodi:arc-type="arc"
+           transform="matrix(2.5,0,0,2.5,373.76826,1708.7112)" />
+        <path
+           style="opacity:1;fill:#000000;stroke:none;stroke-width:0.109736px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m -109.16393,-589.83041 c -7.7512,-9.9186 5.46684,-13.06087 9.341038,-13.32028 27.81265,-2.88313 21.92772,-22.33678 6.01512,-24.54261 -5.193,-0.71988 -12.378678,-0.72505 -18.957518,2.48777 6.12048,-0.33427 13.833598,4.16579 13.505108,9.71726 -0.12947,7.93904 -6.671868,9.21898 -10.691548,12.44678 -3.6002,2.64707 -5.22024,9.48151 0.7878,13.21108 z"
+           id="path952-8"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccscccc"
+           inkscape:export-filename="C:\Users\Elle\Documents\BimBam\BSBG\PIR_REK\Logos_einzeln\aperture_bbgg_offen.png"
+           inkscape:export-xdpi="149"
+           inkscape:export-ydpi="149"
+           transform="matrix(2.5,0,0,2.5,373.76826,1708.7112)" />
+        <rect
+           style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.93668;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+           id="rect954-8"
+           width="2.8248136"
+           height="29.260899"
+           x="-110.63824"
+           y="-631.10132"
+           inkscape:export-filename="C:\Users\Elle\Documents\BimBam\BSBG\PIR_REK\Logos_einzeln\aperture_bbgg_offen.png"
+           inkscape:export-xdpi="149"
+           inkscape:export-ydpi="149"
+           transform="matrix(2.5,0,0,2.5,373.76826,1708.7112)" />
+      </g>
+    </g>
+  </g>
+</svg>
