@@ -8487,10 +8487,6 @@ main {
   outline-offset: 0.125em;
 }
 
-a {
-  color: var(--clr-accent-400);
-}
-
 .nobr {
   white-space: nowrap;
 }
