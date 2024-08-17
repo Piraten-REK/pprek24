@@ -52,14 +52,14 @@ $breakpoints: (
   }
 }
 
-body[data-theme="light"] {
+html[data-theme="light"] {
   color-scheme: light;
-  @include colors.set-theme(light);
+  @include colors.set-theme(light, true);
 }
 
-body[data-theme="dark"] {
+html[data-theme="dark"] {
   color-scheme: dark;
-  @include colors.set-theme(dark);
+  @include colors.set-theme(dark, true);
 }
 
 *, *::before, *::after {

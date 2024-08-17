@@ -98,14 +98,20 @@ $colormap: (
   }
 }
 
-@mixin set-theme ($theme: light) {
+@mixin set-theme ($theme: light, $important: false) {
   @each $name, $shades in $colormap {
     $var: --clr-#{$name};
     $theme-name: --clr-#{$theme}-#{$name};
 
     @if meta.type-of($shades) == 'map' {
       @each $shade in map.keys($shades) {
-        #{$var}-#{$shade}: var(#{$theme-name}-#{$shade});
+        $value: var(#{$theme-name}-#{$shade});
+
+        @if $important {
+          $value: #{$value} !important;
+        }
+        
+        #{$var}-#{$shade}: $value;
       }
 
     } @else {

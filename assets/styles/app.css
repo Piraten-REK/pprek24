@@ -8313,18 +8313,18 @@
     --clr-header-bg: var(--clr-dark-header-bg);
   }
 }
-body[data-theme=light] {
+html[data-theme=light] {
   color-scheme: light;
-  --clr-accent-200: var(--clr-light-accent-200);
-  --clr-accent-300: var(--clr-light-accent-300);
-  --clr-accent-400: var(--clr-light-accent-400);
-  --clr-accent-700: var(--clr-light-accent-700);
-  --clr-accent-800: var(--clr-light-accent-800);
-  --clr-txt-50: var(--clr-light-txt-50);
-  --clr-txt-100: var(--clr-light-txt-100);
-  --clr-txt-200: var(--clr-light-txt-200);
-  --clr-txt-300: var(--clr-light-txt-300);
-  --clr-txt-400: var(--clr-light-txt-400);
+  --clr-accent-200: var(--clr-light-accent-200) !important;
+  --clr-accent-300: var(--clr-light-accent-300) !important;
+  --clr-accent-400: var(--clr-light-accent-400) !important;
+  --clr-accent-700: var(--clr-light-accent-700) !important;
+  --clr-accent-800: var(--clr-light-accent-800) !important;
+  --clr-txt-50: var(--clr-light-txt-50) !important;
+  --clr-txt-100: var(--clr-light-txt-100) !important;
+  --clr-txt-200: var(--clr-light-txt-200) !important;
+  --clr-txt-300: var(--clr-light-txt-300) !important;
+  --clr-txt-400: var(--clr-light-txt-400) !important;
   --clr-input-bg: var(--clr-light-input-bg);
   --clr-site-bg: var(--clr-light-site-bg);
   --clr-nav-bg: var(--clr-light-nav-bg);
@@ -8332,18 +8332,18 @@ body[data-theme=light] {
   --clr-header-bg: var(--clr-light-header-bg);
 }
 
-body[data-theme=dark] {
+html[data-theme=dark] {
   color-scheme: dark;
-  --clr-accent-200: var(--clr-dark-accent-200);
-  --clr-accent-300: var(--clr-dark-accent-300);
-  --clr-accent-400: var(--clr-dark-accent-400);
-  --clr-accent-700: var(--clr-dark-accent-700);
-  --clr-accent-800: var(--clr-dark-accent-800);
-  --clr-txt-50: var(--clr-dark-txt-50);
-  --clr-txt-100: var(--clr-dark-txt-100);
-  --clr-txt-200: var(--clr-dark-txt-200);
-  --clr-txt-300: var(--clr-dark-txt-300);
-  --clr-txt-400: var(--clr-dark-txt-400);
+  --clr-accent-200: var(--clr-dark-accent-200) !important;
+  --clr-accent-300: var(--clr-dark-accent-300) !important;
+  --clr-accent-400: var(--clr-dark-accent-400) !important;
+  --clr-accent-700: var(--clr-dark-accent-700) !important;
+  --clr-accent-800: var(--clr-dark-accent-800) !important;
+  --clr-txt-50: var(--clr-dark-txt-50) !important;
+  --clr-txt-100: var(--clr-dark-txt-100) !important;
+  --clr-txt-200: var(--clr-dark-txt-200) !important;
+  --clr-txt-300: var(--clr-dark-txt-300) !important;
+  --clr-txt-400: var(--clr-dark-txt-400) !important;
   --clr-input-bg: var(--clr-dark-input-bg);
   --clr-site-bg: var(--clr-dark-site-bg);
   --clr-nav-bg: var(--clr-dark-nav-bg);
