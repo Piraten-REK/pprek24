@@ -8246,6 +8246,7 @@
   --clr-light-txt-50: hsl(32, 100%, 99.5%);
   --clr-light-txt-100: hsl(32, 8%, 80%);
   --clr-light-txt-200: hsl(30, 8%, 67%);
+  --clr-light-txt-300: hsl(32, 8%, 30%);
   --clr-light-txt-400: hsl(32, 8%, 10%);
   --clr-light-input-bg: hsl(32, 100%, 98%);
   --clr-light-site-bg: var(--clr-light-txt-50);
@@ -8257,11 +8258,12 @@
   --clr-dark-accent-400: hsl(32, 100%, 50%);
   --clr-dark-accent-700: hsl(21, 10%, 18%);
   --clr-dark-accent-800: hsl(21, 15%, 15%);
-  --clr-dark-txt-50: hsl(32, 100%, 99.5%);
-  --clr-dark-txt-100: hsl(32, 8%, 80%);
-  --clr-dark-txt-200: hsl(30, 8%, 67%);
-  --clr-dark-txt-400: hsl(32, 8%, 10%);
-  --clr-dark-input-bg: hsl(32, 100%, 98%);
+  --clr-dark-txt-50: hsl(32, 8%, 10%);
+  --clr-dark-txt-100: hsl(32, 8%, 20%);
+  --clr-dark-txt-200: hsl(32, 8%, 40%);
+  --clr-dark-txt-300: hsl(32, 8%, 60%);
+  --clr-dark-txt-400: hsl(32, 8%, 99%);
+  --clr-dark-input-bg: hsl(32, 10%, 12%);
   --clr-dark-site-bg: hsl(32, 8%, 10%);
   --clr-dark-nav-bg: hsl(32, 8%, 10%);
   --clr-dark-nav-txt: white;
@@ -8274,6 +8276,7 @@
   --clr-txt-50: var(--clr-light-txt-50);
   --clr-txt-100: var(--clr-light-txt-100);
   --clr-txt-200: var(--clr-light-txt-200);
+  --clr-txt-300: var(--clr-light-txt-300);
   --clr-txt-400: var(--clr-light-txt-400);
   --clr-input-bg: var(--clr-light-input-bg);
   --clr-site-bg: var(--clr-light-site-bg);
@@ -8301,6 +8304,7 @@
     --clr-txt-50: var(--clr-dark-txt-50);
     --clr-txt-100: var(--clr-dark-txt-100);
     --clr-txt-200: var(--clr-dark-txt-200);
+    --clr-txt-300: var(--clr-dark-txt-300);
     --clr-txt-400: var(--clr-dark-txt-400);
     --clr-input-bg: var(--clr-dark-input-bg);
     --clr-site-bg: var(--clr-dark-site-bg);
@@ -8319,6 +8323,7 @@ body[data-theme=light] {
   --clr-txt-50: var(--clr-light-txt-50);
   --clr-txt-100: var(--clr-light-txt-100);
   --clr-txt-200: var(--clr-light-txt-200);
+  --clr-txt-300: var(--clr-light-txt-300);
   --clr-txt-400: var(--clr-light-txt-400);
   --clr-input-bg: var(--clr-light-input-bg);
   --clr-site-bg: var(--clr-light-site-bg);
@@ -8337,6 +8342,7 @@ body[data-theme=dark] {
   --clr-txt-50: var(--clr-dark-txt-50);
   --clr-txt-100: var(--clr-dark-txt-100);
   --clr-txt-200: var(--clr-dark-txt-200);
+  --clr-txt-300: var(--clr-dark-txt-300);
   --clr-txt-400: var(--clr-dark-txt-400);
   --clr-input-bg: var(--clr-dark-input-bg);
   --clr-site-bg: var(--clr-dark-site-bg);
