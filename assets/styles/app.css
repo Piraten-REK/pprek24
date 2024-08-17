@@ -8546,7 +8546,6 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
 
 .site-header .site-nav-toggle svg {
   --_size: 2rem;
-  --_line-height: 1.2px;
   width: var(--_size);
   height: var(--_size);
   display: block;
@@ -8555,9 +8554,9 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
 }
 .site-header .site-nav-toggle svg rect {
   fill: currentColor;
-  width: 10px;
-  height: var(--_line-height);
-  rx: calc(var(--_line-height) / 2);
+  width: 32px;
+  height: 4px;
+  rx: 1px;
   transform-origin: center center;
 }
 @media not (prefers-reduced-motion: reduce) {
@@ -8569,12 +8568,12 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
   y: 0px;
 }
 .site-header .site-nav-toggle svg rect:nth-child(2) {
-  x: 2px;
-  width: 8px;
-  y: calc(5px - var(--_line-height) * 0.5);
+  x: 6.4px;
+  width: 25.6px;
+  y: 14px;
 }
 .site-header .site-nav-toggle svg rect:nth-child(3) {
-  y: calc(10px - var(--_line-height));
+  y: 28px;
 }
 .site-header .site-nav-toggle[aria-expanded=true] svg rect {
   fill: #fff !important;
@@ -8585,14 +8584,14 @@ body[data-mobile-nav=true] .site-header .site-nav-toggle {
   }
 }
 .site-header .site-nav-toggle[aria-expanded=true] svg rect:nth-child(1) {
-  y: calc(5px - var(--_line-height) * 0.5);
+  y: 14px;
   rotate: -45deg;
 }
 .site-header .site-nav-toggle[aria-expanded=true] svg rect:nth-child(2) {
   width: 0;
 }
 .site-header .site-nav-toggle[aria-expanded=true] svg rect:nth-child(3) {
-  y: calc(5px - var(--_line-height) * 0.5);
+  y: 14px;
   rotate: 45deg;
 }
 

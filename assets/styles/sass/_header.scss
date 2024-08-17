@@ -71,9 +71,14 @@
       display: revert;
     }
 
+    $nav: (
+      size: 32px,
+      line-height: 4px,
+      radius: 1px
+    );
+
     svg {
       --_size: 2rem;
-      --_line-height: 1.2px;
       width: var(--_size);
       height: var(--_size);
       display: block;
@@ -82,9 +87,9 @@
 
       rect {
         fill: currentColor;
-        width: 10px;
-        height: var(--_line-height);
-        rx: calc(var(--_line-height) / 2);
+        width: map.get($nav, size);
+        height: map.get($nav, line-height);
+        rx: map.get($nav, radius);
         transform-origin: center center;
 
         @media not (prefers-reduced-motion: reduce) {
@@ -100,13 +105,13 @@
         }
       
         &:nth-child(2) {
-          x: 2px;
-          width: 8px;
-          y: calc(5px - var(--_line-height) * 0.5);
+          x: #{map.get($nav, size) * 0.2};
+          width: #{map.get($nav, size) * 0.8};
+          y: #{map.get($nav, size) * 0.5 - map.get($nav, line-height) * 0.5};
         }
       
         &:nth-child(3) {
-          y: calc(10px - var(--_line-height));
+          y: #{map.get($nav, size) - map.get($nav, line-height)};
         }
       }
     }
@@ -123,14 +128,14 @@
         }
 
         &:nth-child(1) {
-          y: calc(5px - var(--_line-height) * 0.5);
+          y: #{map.get($nav, size) * 0.5 - map.get($nav, line-height) * 0.5};
           rotate: -45deg;
         }
         &:nth-child(2) {
           width: 0;
         }
         &:nth-child(3) {
-          y: calc(5px - var(--_line-height) * 0.5);
+          y: #{map.get($nav, size) * 0.5 - map.get($nav, line-height) * 0.5};
           rotate: 45deg;
         }
       }
